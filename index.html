@@ -14,28 +14,42 @@
 <title>Revolut</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body {
+html {
   height: 100%;
   overflow: hidden;
-  background: #1a0a2e;
+  background: #8040E8;
 }
 body {
+  width: 100%;
   max-width: 393px;
   margin: 0 auto;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   position: relative;
+  overflow: hidden;
 }
 .bg {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: fill;
 }
-.balance-overlay {
+/* Invisible tap target over the balance area in the image */
+.balance-tap {
   position: absolute;
-  top: 15.2%;
+  top: 14%;
+  left: 15%;
+  width: 70%;
+  height: 5%;
+  z-index: 10;
+  cursor: pointer;
+}
+/* Overlay that covers the original balance — hidden until first edit */
+.balance-overlay {
+  display: none;
+  position: absolute;
+  top: 14.1%;
   left: 50%;
   transform: translateX(-50%);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
@@ -45,11 +59,9 @@ body {
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
-  z-index: 10;
-  cursor: pointer;
-  padding: 6px 20px;
-  background: linear-gradient(180deg, #8C44F5 0%, #7E4AF0 100%);
-  border-radius: 8px;
+  z-index: 9;
+  pointer-events: none;
+  padding: 10px 40px;
 }
 .balance-overlay .decimal {
   font-size: 30px;
@@ -102,18 +114,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 .modal input:focus { border-color: rgba(255,255,255,0.45); }
-.modal-btns {
-  display: flex; gap: 10px;
-  margin-top: 20px;
-}
+.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
 .modal-btns button {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+  flex: 1; padding: 14px; border-radius: 12px; border: none;
+  font-size: 15px; font-weight: 600; cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 .btn-cancel { background: rgba(255,255,255,0.1); color: #fff; }
@@ -122,9 +126,12 @@ body {
 </head>
 <body>
 
-<img src="bg.png" class="bg" alt="" draggable="false" />
+<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg" />
+<div class="balance-tap" onclick="openModal()"></div>
+<div class="balance-overlay" id="balanceDisplay">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
 
-<div class="balance-overlay" id="balanceDisplay" onclick="openModal()">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
+<!-- Cover canvas: used to paint over original balance with sampled bg color -->
+<canvas id="cover" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:8;display:none;"></canvas>
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -139,6 +146,7 @@ body {
 
 <script>
 var currentBalance = 21.60;
+
 function openModal() {
   document.getElementById('balanceInput').value = currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
@@ -147,6 +155,41 @@ function openModal() {
 function closeModal() {
   document.getElementById('modal').classList.remove('show');
 }
+
+function sampleBgColor() {
+  // Draw the bg image onto a temp canvas and sample the color behind the balance
+  var img = document.getElementById('bgImg');
+  var tmp = document.createElement('canvas');
+  tmp.width = img.naturalWidth;
+  tmp.height = img.naturalHeight;
+  var ctx = tmp.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  // Sample a pixel at the balance Y position, far left (pure gradient, no text)
+  var sampleY = Math.round(img.naturalHeight * 0.155);
+  var sampleX = 20;
+  var pixel = ctx.getImageData(sampleX, sampleY, 1, 1).data;
+  return 'rgb(' + pixel[0] + ',' + pixel[1] + ',' + pixel[2] + ')';
+}
+
+function coverOriginalBalance(bgColor) {
+  var cv = document.getElementById('cover');
+  var body = document.body;
+  var dpr = window.devicePixelRatio || 3;
+  cv.width = body.offsetWidth * dpr;
+  cv.height = body.offsetHeight * dpr;
+  cv.style.display = 'block';
+  var ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  var w = body.offsetWidth, h = body.offsetHeight;
+  // Cover rectangle over the original balance text area
+  ctx.fillStyle = bgColor;
+  var rectY = h * 0.14;
+  var rectH = h * 0.052;
+  var rectX = w * 0.12;
+  var rectW = w * 0.76;
+  ctx.fillRect(rectX, rectY, rectW, rectH);
+}
+
 function saveBalance() {
   var val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
   if (!val) { closeModal(); return; }
@@ -154,8 +197,16 @@ function saveBalance() {
   var parts = currentBalance.toFixed(2).split('.');
   document.getElementById('balMain').textContent = parseInt(parts[0]).toLocaleString('en');
   document.getElementById('balDec').textContent = parts[1];
+
+  // Sample bg color from the image and cover original balance
+  var bgColor = sampleBgColor();
+  coverOriginalBalance(bgColor);
+
+  // Show the overlay with new amount
+  document.getElementById('balanceDisplay').style.display = 'block';
   closeModal();
 }
+
 document.getElementById('modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
