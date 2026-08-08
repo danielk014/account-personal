@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Revolut">
-<meta name="theme-color" content="#9B4DCA">
+<meta name="theme-color" content="#AD1FF6">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
@@ -24,73 +24,115 @@ html, body {
 }
 body {
   background: linear-gradient(180deg,
-    #B35DD6 0%,
-    #9B4DCA 6%,
-    #8A45C0 12%,
-    #7B40B8 20%,
-    #6E3CB2 28%,
-    #6240AE 36%,
-    #5845AA 44%,
-    #504BA6 52%,
-    #4852A2 60%,
-    #425A9E 68%,
-    #3D629A 76%,
-    #396A96 84%,
-    #357292 92%,
-    #327A8E 100%);
+    #AD1FF6 0%,
+    #A42AF6 6%,
+    #9C33F5 10%,
+    #923FF4 15%,
+    #8C44F5 18%,
+    #7E4AF0 24%,
+    #7050EA 30%,
+    #6555E5 36%,
+    #5C5AE0 42%,
+    #5360DA 48%,
+    #4A66D4 55%,
+    #426CCE 62%,
+    #3B72C8 70%,
+    #3578C2 78%,
+    #307EBC 86%,
+    #2C84B6 100%);
   min-height: 100vh;
   min-height: -webkit-fill-available;
 }
 
-.status-bar { height: env(safe-area-inset-top, 48px); min-height: 48px; }
+/* Status bar with Dynamic Island */
+.status-bar-area {
+  position: relative;
+  height: 59px;
+  width: 100%;
+}
+.dynamic-island {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 37px;
+  background: #000;
+  border-radius: 19px;
+  z-index: 10;
+}
+.status-time {
+  position: absolute;
+  left: 32px;
+  top: 17px;
+  font: 600 17px/1 -apple-system, 'SF Pro Text', sans-serif;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.status-right {
+  position: absolute;
+  right: 28px;
+  top: 19px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-right svg { display: block; }
 
-/* Top nav */
+/* Top nav controls */
 .top-nav {
   display: flex;
   align-items: center;
-  padding: 4px 16px 14px;
-  gap: 10px;
+  padding: 0 20px;
+  height: 44px;
+  gap: 0;
+  margin-bottom: 10px;
 }
 .avatar {
-  width: 46px; height: 46px;
+  width: 44px; height: 44px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #7DAFC8, #5B94B2);
+  background: #7F5CFF;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 700; color: #fff;
+  font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.92);
   position: relative;
   flex-shrink: 0;
   cursor: pointer;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
+  margin-right: 16px;
 }
 .avatar::after {
   content: '';
-  position: absolute; top: -3px; right: -3px;
-  width: 14px; height: 14px;
-  background: #E8436E;
+  position: absolute; top: -1px; right: -1px;
+  width: 5px; height: 5px;
+  background: #FF453A;
   border-radius: 50%;
-  border: 2.5px solid #9B4DCA;
+  border: none;
 }
 .search-bar {
-  flex: 1;
-  height: 42px;
-  background: rgba(255,255,255,0.08);
+  width: 185px;
+  height: 44px;
+  background: rgba(200,80,255,0.22);
   border-radius: 22px;
-  border: 1.5px solid rgba(220,180,255,0.35);
+  border: 1px solid rgba(216,44,255,0.55);
   display: flex; align-items: center;
-  padding: 0 16px;
+  padding: 0 14px;
   gap: 10px;
-  color: rgba(255,255,255,0.85);
-  font-size: 16px;
+  color: rgba(255,230,255,0.85);
+  font-size: 15px;
   font-weight: 400;
+  flex-shrink: 0;
+  margin-right: 12px;
 }
 .nav-icon {
-  width: 42px; height: 42px;
+  width: 44px; height: 44px;
   border-radius: 50%;
-  border: 1.5px solid rgba(220,160,255,0.4);
+  border: 1px solid rgba(216,44,255,0.55);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.05);
+  background: rgba(200,80,255,0.22);
+  margin-right: 12px;
 }
+.nav-icon:last-child { margin-right: 0; }
 
 /* Balance */
 .balance-section {
@@ -419,30 +461,56 @@ body {
 </head>
 <body>
 
-<div class="status-bar"></div>
+<!-- Status bar with Dynamic Island -->
+<div class="status-bar-area">
+  <div class="dynamic-island"></div>
+  <span class="status-time">7:51</span>
+  <div class="status-right">
+    <!-- Cellular -->
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff">
+      <rect x="0" y="9" width="3" height="3" rx="0.6"/>
+      <rect x="4.5" y="6" width="3" height="6" rx="0.6"/>
+      <rect x="9" y="3" width="3" height="9" rx="0.6"/>
+      <rect x="13.5" y="0" width="3" height="12" rx="0.6"/>
+    </svg>
+    <!-- WiFi -->
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round">
+      <path d="M1 3.5C4 1 12 1 15 3.5"/>
+      <path d="M3.5 6.5C5.5 5 10.5 5 12.5 6.5"/>
+      <path d="M6 9.5C7 9 9 9 10 9.5"/>
+      <circle cx="8" cy="11.5" r="0.8" fill="#fff" stroke="none"/>
+    </svg>
+    <!-- Battery -->
+    <svg width="27" height="12" viewBox="0 0 27 12" fill="none">
+      <rect x="0.5" y="0.5" width="23" height="11" rx="2.5" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+      <rect x="2" y="2" width="17.5" height="8" rx="1.5" fill="#fff"/>
+      <path d="M25 4v4a1.5 1.5 0 000-4z" fill="rgba(255,255,255,0.4)"/>
+    </svg>
+  </div>
+</div>
 
-<!-- Top Nav -->
+<!-- Top Nav Controls -->
 <div class="top-nav">
   <div class="avatar" onclick="openModal()">DK</div>
   <div class="search-bar">
-    <svg width="20" height="20" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+    <svg width="19" height="19" fill="none" stroke="rgba(255,230,255,0.8)" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
     <span>Search</span>
   </div>
   <div class="nav-icon">
-    <!-- Uneven stat bars -->
-    <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-      <rect x="3" y="13" width="3.5" height="8" rx="1.2" fill="rgba(255,255,255,0.9)"/>
-      <rect x="8.5" y="6" width="3.5" height="15" rx="1.2" fill="rgba(255,255,255,0.9)"/>
-      <rect x="14" y="10" width="3.5" height="11" rx="1.2" fill="rgba(255,255,255,0.9)"/>
-      <rect x="19.5" y="3" width="3.5" height="18" rx="1.2" fill="rgba(255,255,255,0.9)"/>
+    <!-- Analytics bars - bold filled, uneven -->
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="rgba(255,230,255,0.9)">
+      <rect x="0" y="12" width="4" height="8" rx="2"/>
+      <rect x="5.7" y="5" width="4" height="15" rx="2"/>
+      <rect x="11.4" y="8.5" width="4" height="11.5" rx="2"/>
+      <rect x="17" y="2" width="4" height="18" rx="2"/>
     </svg>
   </div>
   <div class="nav-icon">
-    <!-- Credit card -->
-    <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-      <rect x="2" y="5" width="20" height="14" rx="2.5" stroke="rgba(255,255,255,0.9)" stroke-width="1.7" fill="none"/>
-      <path d="M2 10h20" stroke="rgba(255,255,255,0.9)" stroke-width="1.7"/>
-      <rect x="5" y="14" width="5" height="2" rx="0.8" fill="rgba(255,255,255,0.5)"/>
+    <!-- Credit card - bold filled -->
+    <svg width="21" height="16" viewBox="0 0 21 16" fill="rgba(255,230,255,0.9)">
+      <rect x="0" y="0" width="21" height="16" rx="3"/>
+      <rect x="0" y="4.5" width="21" height="3.5" fill="rgba(180,60,255,0.5)"/>
+      <rect x="3" y="11" width="5" height="2" rx="1" fill="rgba(180,60,255,0.4)"/>
     </svg>
   </div>
 </div>
