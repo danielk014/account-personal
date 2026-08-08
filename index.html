@@ -33,16 +33,6 @@ body {
   object-fit: cover;
   object-position: top center;
 }
-.balance-tap {
-  position: absolute;
-  top: 15.2%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 260px;
-  height: 70px;
-  cursor: pointer;
-  z-index: 10;
-}
 .balance-overlay {
   position: absolute;
   top: 15.2%;
@@ -55,8 +45,11 @@ body {
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
-  z-index: 9;
-  pointer-events: none;
+  z-index: 10;
+  cursor: pointer;
+  padding: 6px 20px;
+  background: linear-gradient(180deg, #8C44F5 0%, #7E4AF0 100%);
+  border-radius: 8px;
 }
 .balance-overlay .decimal {
   font-size: 30px;
@@ -131,8 +124,7 @@ body {
 
 <img src="bg.png" class="bg" alt="" draggable="false" />
 
-<div class="balance-overlay" id="balanceDisplay">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
-<div class="balance-tap" onclick="openModal()"></div>
+<div class="balance-overlay" id="balanceDisplay" onclick="openModal()">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -146,10 +138,9 @@ body {
 </div>
 
 <script>
+var currentBalance = 21.60;
 function openModal() {
-  var main = document.getElementById('balMain').textContent;
-  var dec = document.getElementById('balDec').textContent;
-  document.getElementById('balanceInput').value = main.replace(/,/g,'') + '.' + dec;
+  document.getElementById('balanceInput').value = currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
   setTimeout(function(){ document.getElementById('balanceInput').focus(); }, 100);
 }
@@ -159,9 +150,9 @@ function closeModal() {
 function saveBalance() {
   var val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
   if (!val) { closeModal(); return; }
-  var parts = parseFloat(val).toFixed(2).split('.');
-  var mainPart = parseInt(parts[0]).toLocaleString('en');
-  document.getElementById('balMain').textContent = mainPart;
+  currentBalance = parseFloat(parseFloat(val).toFixed(2));
+  var parts = currentBalance.toFixed(2).split('.');
+  document.getElementById('balMain').textContent = parseInt(parts[0]).toLocaleString('en');
   document.getElementById('balDec').textContent = parts[1];
   closeModal();
 }
