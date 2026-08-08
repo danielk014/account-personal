@@ -17,128 +17,48 @@
 html, body {
   height: 100%;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  background: #2B1B5E;
-  color: #fff;
+  background: #1a0a2e;
 }
 body {
   max-width: 393px;
   margin: 0 auto;
-  background: linear-gradient(180deg,
-    #AD1FF6 0%,
-    #A42AF6 6%,
-    #9C33F5 10%,
-    #923FF4 15%,
-    #8C44F5 18%,
-    #7E4AF0 24%,
-    #7050EA 30%,
-    #6555E5 36%,
-    #5C5AE0 42%,
-    #5360DA 48%,
-    #4A66D4 55%,
-    #426CCE 62%,
-    #3B72C8 70%,
-    #3578C2 78%,
-    #307EBC 86%,
-    #2C84B6 100%);
   height: 100vh;
   height: 100dvh;
   position: relative;
 }
-
-.scroll-area {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 100px;
-}
-
-/* Status bar spacer */
-.status-bar-area {
-  height: env(safe-area-inset-top, 48px);
-  min-height: 48px;
+.bg {
   width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
 }
-
-/* Top nav controls */
-.top-nav {
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  height: 44px;
-  gap: 0;
-  margin-bottom: 10px;
-}
-.avatar {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: #7F5CFF;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.92);
-  position: relative;
-  flex-shrink: 0;
+.balance-tap {
+  position: absolute;
+  top: 15.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 70px;
   cursor: pointer;
-  letter-spacing: 0.3px;
-  margin-right: 16px;
+  z-index: 10;
 }
-.avatar::after {
-  content: '';
-  position: absolute; top: -1px; right: -1px;
-  width: 5px; height: 5px;
-  background: #FF453A;
-  border-radius: 50%;
-  border: none;
-}
-.search-bar {
-  width: 185px;
-  height: 44px;
-  background: rgba(200,80,255,0.22);
-  border-radius: 22px;
-  border: 1px solid rgba(216,44,255,0.55);
-  display: flex; align-items: center;
-  padding: 0 14px;
-  gap: 10px;
-  color: rgba(255,230,255,0.85);
-  font-size: 15px;
-  font-weight: 400;
-  flex-shrink: 0;
-  margin-right: 12px;
-}
-.nav-icon {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(216,44,255,0.55);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  background: rgba(200,80,255,0.22);
-  margin-right: 12px;
-}
-.nav-icon:last-child { margin-right: 0; }
-
-/* Balance */
-.balance-section {
-  text-align: center;
-  padding: 36px 20px 8px;
-}
-.account-label {
-  font-size: 14px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 8px;
-  letter-spacing: 0.2px;
-  font-weight: 400;
-}
-.balance {
+.balance-overlay {
+  position: absolute;
+  top: 15.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   font-size: 54px;
   font-weight: 700;
-  line-height: 1.1;
+  color: #fff;
   letter-spacing: -1px;
-  cursor: pointer;
+  line-height: 1;
+  text-align: center;
+  z-index: 9;
+  pointer-events: none;
 }
-.balance .decimal {
+.balance-overlay .decimal {
   font-size: 30px;
   font-weight: 600;
   vertical-align: top;
@@ -146,203 +66,6 @@ body {
   top: 4px;
   letter-spacing: 0;
 }
-.iban-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
-  color: rgba(255,255,255,0.8);
-  font-size: 14px;
-  letter-spacing: 0.3px;
-  font-weight: 400;
-}
-
-/* Accounts pill with dots */
-.accounts-pill-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 0 6px;
-  gap: 12px;
-}
-.accounts-pill {
-  background: rgba(200,180,255,0.18);
-  border-radius: 22px;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.95);
-}
-.dot-row {
-  display: flex; gap: 6px; align-items: center;
-}
-.dot-row .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: rgba(255,255,255,0.8);
-}
-.dot-row .dot.dim {
-  width: 6px; height: 6px;
-  background: rgba(255,255,255,0.25);
-}
-
-/* Action buttons */
-.actions {
-  display: flex;
-  justify-content: space-around;
-  padding: 18px 16px 18px;
-}
-.action-btn {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 10px;
-}
-.action-circle {
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center;
-}
-.action-label {
-  font-size: 12px;
-  color: rgba(255,255,255,0.85);
-  font-weight: 500;
-}
-
-/* Promo card */
-.promo-card {
-  margin: 8px 16px 0;
-  background: rgba(160,150,200,0.18);
-  border-radius: 18px;
-  padding: 22px 20px;
-  position: relative;
-  overflow: hidden;
-  min-height: 110px;
-}
-.promo-card .close-btn {
-  position: absolute; top: 14px; right: 16px;
-  color: rgba(255,255,255,0.35);
-  font-size: 18px; cursor: pointer; z-index: 2;
-  line-height: 1;
-}
-.promo-title {
-  font-size: 18px; font-weight: 700;
-  margin-bottom: 6px;
-}
-.promo-sub {
-  font-size: 13.5px;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.45;
-  max-width: 58%;
-}
-.promo-img {
-  position: absolute;
-  right: 10px; bottom: 0; top: 0;
-  width: 160px;
-  display: flex; align-items: center; justify-content: center;
-}
-.promo-img .card-stack {
-  width: 140px; height: 90px;
-  position: relative;
-}
-.card-stack .card-item {
-  position: absolute;
-  width: 100px; height: 62px;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-}
-.card-stack .card-item:nth-child(1) {
-  top: 0; right: 0; transform: rotate(5deg);
-  background: linear-gradient(135deg, #7C5CE0 0%, #D45CAA 50%, #E8A060 100%);
-}
-.card-stack .card-item:nth-child(2) {
-  top: 14px; right: 20px; transform: rotate(-5deg);
-  background: linear-gradient(145deg, #1E1E32 0%, #35355A 100%);
-}
-.promo-dots {
-  display: flex; gap: 5px; justify-content: center; padding: 12px 0 6px;
-}
-.promo-dots .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-}
-.promo-dots .dot.active { background: rgba(255,255,255,0.75); }
-
-/* Transactions */
-.transactions {
-  margin: 6px 16px 0;
-  background: rgba(150,140,200,0.14);
-  border-radius: 18px;
-  padding: 4px 0;
-}
-.tx-section-header {
-  padding: 18px 16px 6px;
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.55);
-}
-.tx-item {
-  display: flex;
-  align-items: center;
-  padding: 13px 16px;
-  gap: 14px;
-}
-.tx-icon {
-  width: 44px; height: 44px;
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-.tx-info { flex: 1; }
-.tx-name { font-size: 16px; font-weight: 600; }
-.tx-name .declined-badge {
-  display: inline-block;
-  background: rgba(220,50,50,0.25);
-  color: #f06060;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-  vertical-align: middle;
-  letter-spacing: 0.3px;
-}
-.tx-date { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
-.tx-amount { text-align: right; }
-.tx-amount .primary { font-size: 15px; font-weight: 600; }
-.tx-amount .secondary { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
-
-/* Bottom tab bar — canvas rendered */
-.tabbar-wrap {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(min(100vw, 393px) - 32px);
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 21px);
-  height: 62px;
-  z-index: 50;
-  pointer-events: none;
-}
-.tabbar-wrap canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Home indicator bar */
-.home-indicator {
-  position: fixed;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 134px;
-  height: 5px;
-  background: rgba(255,255,255,0.25);
-  border-radius: 3px;
-  z-index: 51;
-}
-
-/* Modal */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -369,6 +92,7 @@ body {
   font-weight: 600;
   margin-bottom: 20px;
   color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 .modal input {
   width: 100%;
@@ -382,6 +106,7 @@ body {
   text-align: center;
   outline: none;
   -webkit-appearance: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 .modal input:focus { border-color: rgba(255,255,255,0.45); }
 .modal-btns {
@@ -396,6 +121,7 @@ body {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 .btn-cancel { background: rgba(255,255,255,0.1); color: #fff; }
 .btn-save { background: #fff; color: #1a0a2e; }
@@ -403,223 +129,11 @@ body {
 </head>
 <body>
 
-<div class="scroll-area">
+<img src="bg.png" class="bg" alt="" draggable="false" />
 
-<div class="status-bar-area"></div>
+<div class="balance-overlay" id="balanceDisplay">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
+<div class="balance-tap" onclick="openModal()"></div>
 
-<!-- Top Nav Controls -->
-<div class="top-nav">
-  <div class="avatar" onclick="openModal()">DK</div>
-  <div class="search-bar">
-    <svg width="19" height="19" fill="none" stroke="rgba(255,230,255,0.8)" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
-    <span>Search</span>
-  </div>
-  <div class="nav-icon">
-    <svg width="19" height="18" viewBox="0 0 19 18" fill="rgba(255,230,255,0.9)">
-      <rect x="0" y="10" width="5" height="8" rx="2.5"/>
-      <rect x="7" y="1" width="5" height="17" rx="2.5"/>
-      <rect x="14" y="6" width="5" height="12" rx="2.5"/>
-    </svg>
-  </div>
-  <div class="nav-icon">
-    <svg width="21" height="16" viewBox="0 0 21 16" fill="rgba(255,230,255,0.9)">
-      <rect x="0" y="0" width="21" height="16" rx="3"/>
-      <rect x="0" y="4.5" width="21" height="3.5" fill="rgba(180,60,255,0.5)"/>
-      <rect x="3" y="11" width="5" height="2" rx="1" fill="rgba(180,60,255,0.4)"/>
-    </svg>
-  </div>
-</div>
-
-<!-- Balance -->
-<div class="balance-section">
-  <div class="account-label">Personal · EUR</div>
-  <div class="balance" onclick="openModal()">€<span id="balMain">57</span><span class="decimal">.<span id="balDec">76</span></span></div>
-  <div class="iban-row">
-    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
-    <span>NL75 REVO 0942 7692 05</span>
-  </div>
-</div>
-
-<!-- Accounts pill + dots -->
-<div class="accounts-pill-wrap">
-  <div class="accounts-pill">Accounts</div>
-  <div class="dot-row">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot dim"></div>
-  </div>
-</div>
-
-<!-- Action buttons -->
-<div class="actions">
-  <div class="action-btn">
-    <div class="action-circle">
-      <svg width="28" height="28" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
-    </div>
-    <span class="action-label">Add money</span>
-  </div>
-  <div class="action-btn">
-    <div class="action-circle">
-      <svg width="26" height="26" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M12 2L22 12L12 22L2 12Z" stroke-linejoin="round"/>
-        <path d="M8 12h8M15 9l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <span class="action-label">Move</span>
-  </div>
-  <div class="action-btn">
-    <div class="action-circle">
-      <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
-    </div>
-    <span class="action-label">Details</span>
-  </div>
-  <div class="action-btn">
-    <div class="action-circle">
-      <svg width="26" height="26" fill="#fff" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>
-    </div>
-    <span class="action-label">More</span>
-  </div>
-</div>
-
-<!-- Promo card -->
-<div class="promo-card">
-  <div class="close-btn">&#x2715;</div>
-  <div class="promo-title">Refer and earn €70</div>
-  <div class="promo-sub">Earn as friends reach goals. Until August 25. T&Cs apply</div>
-  <div class="promo-img">
-    <div class="card-stack">
-      <div class="card-item"></div>
-      <div class="card-item"></div>
-    </div>
-  </div>
-</div>
-
-<div class="promo-dots">
-  <div class="dot active"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-</div>
-
-<!-- Transactions - Today -->
-<div class="transactions">
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:#cc0000;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;padding:2px;">
-        <span style="font-size:12px;font-style:italic;font-weight:900;color:#fff;letter-spacing:-0.3px;">Vomar</span>
-        <span style="font-size:4.5px;color:rgba(255,255,200,0.9);letter-spacing:0.6px;margin-top:1px;font-weight:700;text-transform:uppercase;">voordeelmarkt</span>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">Vomar</div>
-      <div class="tx-date">Today, 1:05 PM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€11.88</div>
-    </div>
-  </div>
-</div>
-
-<!-- Yesterday header -->
-<div class="tx-section-header" style="padding: 18px 16px 8px;">Yesterday</div>
-
-<!-- Transactions - Yesterday -->
-<div class="transactions">
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:#cc0000;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;padding:2px;">
-        <span style="font-size:12px;font-style:italic;font-weight:900;color:#fff;letter-spacing:-0.3px;">Vomar</span>
-        <span style="font-size:4.5px;color:rgba(255,255,200,0.9);letter-spacing:0.6px;margin-top:1px;font-weight:700;text-transform:uppercase;">voordeelmarkt</span>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">Vomar</div>
-      <div class="tx-date">Yesterday, 9:20 PM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€8.46</div>
-    </div>
-  </div>
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:#cc0000;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;padding:2px;">
-        <span style="font-size:12px;font-style:italic;font-weight:900;color:#fff;letter-spacing:-0.3px;">Vomar</span>
-        <span style="font-size:4.5px;color:rgba(255,255,200,0.9);letter-spacing:0.6px;margin-top:1px;font-weight:700;text-transform:uppercase;">voordeelmarkt</span>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">Vomar</div>
-      <div class="tx-date">Yesterday, 4:49 PM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€18.85</div>
-    </div>
-  </div>
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:#FF7B00;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="10" r="5" fill="#fff"/>
-          <path d="M7 24c0-4 3.1-7 7-7s7 3 7 7" fill="#fff"/>
-          <circle cx="20" cy="7" r="2.5" fill="#fff"/>
-          <path d="M22 8.5l3-2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">Thuisbezorgd.nl</div>
-      <div class="tx-date">Yesterday, 3:41 PM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€31.98</div>
-    </div>
-  </div>
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:#FFC72C;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <path d="M6 24V10c0-2 1.5-4 3-4s3 2.5 3 5v8M18 24V11c0-2.5 1.5-5 3-5s3 2 3 4v14M12 19v-8c0-2.5 1.5-5 3-5s3 2.5 3 5v8" fill="#DA291C"/>
-        </svg>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">McDonald's</div>
-      <div class="tx-date">Yesterday, 11:33 AM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€24.10</div>
-    </div>
-  </div>
-  <div class="tx-item">
-    <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
-      <div style="background:rgba(255,255,255,0.12);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-          <rect x="2" y="6" width="22" height="14" rx="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none"/>
-          <path d="M2 11h22" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
-          <rect x="5" y="14.5" width="6" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
-        </svg>
-      </div>
-    </div>
-    <div class="tx-info">
-      <div class="tx-name">Debit card ending in 3485 <span class="declined-badge">Declined</span></div>
-      <div class="tx-date">Yesterday, 11:28 AM</div>
-    </div>
-    <div class="tx-amount">
-      <div class="primary">-€23.40</div>
-    </div>
-  </div>
-</div>
-
-</div><!-- end scroll-area -->
-
-<!-- Bottom Tab Bar (canvas-rendered, fixed) -->
-<div class="tabbar-wrap"><canvas id="tabbarCanvas"></canvas></div>
-<div class="home-indicator"></div>
-
-<!-- Edit Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h3>Set Balance</h3>
@@ -639,11 +153,9 @@ function openModal() {
   document.getElementById('modal').classList.add('show');
   setTimeout(function(){ document.getElementById('balanceInput').focus(); }, 100);
 }
-
 function closeModal() {
   document.getElementById('modal').classList.remove('show');
 }
-
 function saveBalance() {
   var val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
   if (!val) { closeModal(); return; }
@@ -653,155 +165,12 @@ function saveBalance() {
   document.getElementById('balDec').textContent = parts[1];
   closeModal();
 }
-
 document.getElementById('modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
-
 document.getElementById('balanceInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') saveBalance();
 });
-
-// ─── Draw bottom tab bar on canvas ───
-(function(){
-  var dpr = window.devicePixelRatio || 3;
-  var wrap = document.querySelector('.tabbar-wrap');
-  var cv = document.getElementById('tabbarCanvas');
-  var W_CSS = wrap.offsetWidth, H_CSS = 62;
-  var W = W_CSS * dpr, H = H_CSS * dpr;
-  cv.width = W; cv.height = H;
-  var g = cv.getContext('2d');
-  g.scale(dpr, dpr);
-  var w = W_CSS, h = H_CSS;
-
-  function rr(x,y,bw,bh,r){ g.beginPath(); g.moveTo(x+r,y); g.lineTo(x+bw-r,y); g.quadraticCurveTo(x+bw,y,x+bw,y+r); g.lineTo(x+bw,y+bh-r); g.quadraticCurveTo(x+bw,y+bh,x+bw-r,y+bh); g.lineTo(x+r,y+bh); g.quadraticCurveTo(x,y+bh,x,y+bh-r); g.lineTo(x,y+r); g.quadraticCurveTo(x,y,x+r,y); g.closePath(); }
-
-  g.save();
-  rr(0,0,w,h,31);
-  g.clip();
-  g.fillStyle='#232252';
-  g.fillRect(0,0,w,h);
-  g.restore();
-
-  g.save();
-  rr(0.5,0.5,w-1,h-1,30.5);
-  g.strokeStyle='rgba(85,81,204,0.55)';
-  g.lineWidth=1;
-  g.stroke();
-  g.restore();
-
-  var slot=w/5;
-
-  var pw=77,ph=54,pcx=slot/2;
-  g.save();
-  rr(pcx-pw/2, h/2-ph/2, pw, ph, 27);
-  g.fillStyle='rgba(255,255,255,0.10)';
-  g.fill();
-  g.restore();
-
-  var labels=['Home','Invest','Payments','Crypto','RevPoints'];
-  var activeCol='#FFFFFF', inactiveCol='#B6B5C3';
-
-  labels.forEach(function(label,i){
-    var cx=slot*i+slot/2;
-    var col=i===0?activeCol:inactiveCol;
-    g.fillStyle=col;
-    g.font=(i===0?'600':'500')+' 10px -apple-system,"SF Pro Text",sans-serif';
-    g.textAlign='center';
-    g.textBaseline='bottom';
-    g.fillText(label, cx, h-8);
-  });
-
-  var s=slot;
-
-  // Home R
-  (function(){
-    var cx=s/2;
-    g.fillStyle=activeCol;
-    g.font='900 18px -apple-system,sans-serif';
-    g.textAlign='center';
-    g.textBaseline='middle';
-    g.fillText('R', cx, h/2-5);
-  })();
-
-  // Invest
-  (function(){
-    var cx=s*1+s/2;
-    g.fillStyle=inactiveCol;
-    var bw=2.3,gap=2.5,bh=[7,10,8.5,12];
-    var tw=bw*4+gap*3;
-    var sx=cx-tw/2, by=h/2+9;
-    bh.forEach(function(bht,i){
-      rr(sx+i*(bw+gap), by-bht, bw, bht, bw/2);
-      g.fill();
-    });
-    g.beginPath();
-    g.strokeStyle=inactiveCol;
-    g.lineWidth=2.2;
-    g.lineCap='round';
-    g.lineJoin='round';
-    g.moveTo(sx+1, h/2-2);
-    g.quadraticCurveTo(sx+5, h/2-7, sx+8, h/2-3);
-    g.quadraticCurveTo(sx+11, h/2+1, sx+14, h/2-5);
-    g.quadraticCurveTo(sx+17, h/2-11, sx+tw-1, h/2-9);
-    g.stroke();
-  })();
-
-  // Payments
-  (function(){
-    var cx=s*2+s/2;
-    g.strokeStyle=inactiveCol;
-    g.lineCap='round';
-    g.lineJoin='round';
-    g.lineWidth=2.5;
-    var y1=h/2-8,y2=h/2+4;
-    g.beginPath(); g.moveTo(cx-9,y1); g.lineTo(cx+7,y1); g.stroke();
-    g.beginPath(); g.moveTo(cx+2,y1-5); g.lineTo(cx+9,y1); g.lineTo(cx+2,y1+5); g.stroke();
-    g.beginPath(); g.moveTo(cx+9,y2); g.lineTo(cx-7,y2); g.stroke();
-    g.beginPath(); g.moveTo(cx-2,y2-5); g.lineTo(cx-9,y2); g.lineTo(cx-2,y2+5); g.stroke();
-    g.fillStyle='#EB5545';
-    g.beginPath();
-    g.arc(cx+11, h/2-12, 2.8, 0, Math.PI*2);
-    g.fill();
-  })();
-
-  // Crypto
-  (function(){
-    var cx=s*3+s/2;
-    g.fillStyle=inactiveCol;
-    g.font='600 16px -apple-system,sans-serif';
-    g.textAlign='center';
-    g.textBaseline='middle';
-    g.fillText('\u20BF', cx, h/2-5);
-  })();
-
-  // RevPoints hexagon
-  (function(){
-    var cx=s*4+s/2, cy=h/2-5;
-    g.fillStyle=inactiveCol;
-    var r=9.5;
-    g.beginPath();
-    for(var i=0;i<6;i++){
-      var a=Math.PI/2+i*Math.PI/3;
-      var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
-      if(i===0)g.moveTo(x,y); else g.lineTo(x,y);
-    }
-    g.closePath();
-    g.fill();
-    g.save();
-    g.globalCompositeOperation='destination-out';
-    g.beginPath();
-    var sr=5.5,si=2;
-    g.moveTo(cx,cy-sr);
-    g.quadraticCurveTo(cx+si/2,cy-si/2,cx+sr,cy);
-    g.quadraticCurveTo(cx+si/2,cy+si/2,cx,cy+sr);
-    g.quadraticCurveTo(cx-si/2,cy+si/2,cx-sr,cy);
-    g.quadraticCurveTo(cx-si/2,cy-si/2,cx,cy-sr);
-    g.closePath();
-    g.fill();
-    g.restore();
-  })();
-})();
 </script>
 
 </body>
