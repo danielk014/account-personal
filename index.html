@@ -21,6 +21,7 @@ html,body{
 }
 body{
   max-width:393px;
+  height:100%;
   margin:0 auto;
   position:relative;
 }
@@ -49,6 +50,7 @@ body{
   width:100%;
   height:6%;
   z-index:15;
+  background:linear-gradient(180deg,#9038F4 0%,#8840F2 100%);
 }
 .balance-text{
   display:none;
@@ -120,9 +122,9 @@ body{
 </head>
 <body>
 
-<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg" crossorigin="anonymous"/>
+<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg"/>
 <div class="balance-tap" id="balTap"></div>
-<canvas class="balance-cover" id="cover"></canvas>
+<div class="balance-cover" id="cover"></div>
 <div class="balance-text" id="balText">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
 
 <div class="modal-overlay" id="modal">
@@ -138,7 +140,6 @@ body{
 
 <script>
 var currentBalance=21.60;
-var img=document.getElementById('bgImg');
 
 document.getElementById('balTap').addEventListener('click',openModal);
 
@@ -157,31 +158,9 @@ function saveBalance(){
   var parts=currentBalance.toFixed(2).split('.');
   document.getElementById('balMain').textContent=parseInt(parts[0]).toLocaleString('en');
   document.getElementById('balDec').textContent=parts[1];
-  paintCover();
   document.getElementById('cover').style.display='block';
   document.getElementById('balText').style.display='block';
   closeModal();
-}
-
-function paintCover(){
-  var cv=document.getElementById('cover');
-  var rect=cv.getBoundingClientRect();
-  var dpr=window.devicePixelRatio||3;
-  cv.width=rect.width*dpr;
-  cv.height=rect.height*dpr;
-  var ctx=cv.getContext('2d');
-  // Draw the same region of bg.png onto the cover canvas (without text)
-  // We sample a vertical stripe from the left edge (no text there) and tile it
-  var imgW=img.naturalWidth,imgH=img.naturalHeight;
-  var bodyRect=document.body.getBoundingClientRect();
-  // Map cover position to image coordinates
-  var scaleY=imgH/bodyRect.height;
-  var scaleX=imgW/bodyRect.width;
-  var srcY=Math.round((rect.top-bodyRect.top)*scaleY);
-  var srcH=Math.round(rect.height*scaleY);
-  // Draw full-width strip from the image's left edge (pure gradient, no text)
-  // We take a 1px-wide column and stretch it across
-  ctx.drawImage(img,0,srcY,1,srcH,0,0,cv.width,cv.height);
 }
 
 document.getElementById('modal').addEventListener('click',function(e){
