@@ -289,17 +289,17 @@ body {
 .tabbar {
   position: fixed;
   left: 16px; right: 16px; bottom: 21px;
-  height: 61px;
-  padding: 4px 9px;
+  height: 62px;
+  padding: 0 6px;
   display: flex;
   align-items: center;
   border-radius: 31px;
-  background: #232252;
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: rgba(30,28,68,0.92);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
   box-shadow:
-    inset 0 0 0 1px rgba(91,82,255,0.65),
-    0 8px 18px rgba(10,8,45,0.4);
+    inset 0 0 0 1px rgba(100,95,220,0.45),
+    0 8px 24px rgba(8,6,40,0.5);
   overflow: visible;
   z-index: 50;
 }
@@ -315,19 +315,19 @@ body {
   background: none;
   border: 0;
   padding: 0;
-  color: #B4B7CD;
+  color: rgba(180,183,210,0.85);
   -webkit-appearance: none;
   cursor: pointer;
   outline: none;
 }
-.tab.is-active { color: #F4F5F9; }
+.tab.is-active { color: #EEEEF6; }
 .tab .pill {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%,-50%);
-  width: 79px; height: 53px;
-  border-radius: 27px;
-  background: #393862;
+  width: 78px; height: 52px;
+  border-radius: 26px;
+  background: rgba(255,255,255,0.08);
   pointer-events: none;
 }
 .tab .tab-icon {
@@ -340,8 +340,8 @@ body {
   display: block;
 }
 .tab .tab-label {
-  font: 500 10.5px/12px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  letter-spacing: 0;
+  font: 500 10px/12px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0.1px;
   white-space: nowrap;
   z-index: 1;
 }
@@ -350,10 +350,10 @@ body {
 }
 .tab .badge {
   position: absolute;
-  top: -2px; right: -3px;
-  width: 5.5px; height: 5.5px;
+  top: 0px; right: -1px;
+  width: 7px; height: 7px;
   border-radius: 50%;
-  background: #EC5C46;
+  background: #E85640;
 }
 
 .bottom-spacer { height: 110px; }
@@ -640,48 +640,25 @@ body {
 
 <!-- Bottom Tab Bar -->
 <nav class="tabbar">
-  <!-- Home (active) -->
+  <!-- Home -->
   <button class="tab is-active">
     <span class="pill"></span>
     <span class="tab-icon">
-      <!-- Revolut R mark: geometric, with notch gap between top arm and left stem -->
-      <svg width="15" height="19" viewBox="0 0 15 19" fill="currentColor">
-        <!-- Top horizontal arm -->
-        <rect x="0" y="0" width="15" height="3.2" rx="0.3"/>
-        <!-- Left vertical stem (detached, starts below notch) -->
-        <rect x="0" y="4.6" width="3.8" height="14.4" rx="0.3"/>
-        <!-- Bowl right side -->
-        <path d="M3.8 3.2h5.5c2.8 0 5 1.8 5 4.2s-2.2 4.2-5 4.2H7.5v-3.2h1.8c1 0 1.8-.5 1.8-1s-.8-1-1.8-1H7.5V3.2z"/>
-        <!-- Diagonal leg -->
-        <polygon points="7.5,11.6 11.5,11.6 15,19 11,19"/>
-      </svg>
+      <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor"><path d="M0 0h15.2v3.6H4.2v2h4.6a5.2 5.2 0 010 10.4H4.2V20H0V0zm4.2 12h4.6a1.6 1.6 0 100-3.2H4.2V12z"/></svg>
     </span>
     <span class="tab-label">Home</span>
   </button>
   <!-- Invest -->
   <button class="tab">
     <span class="tab-icon">
-      <!-- 4 rounded bars + wavy trend line -->
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-        <rect x="1" y="13.5" width="2.6" height="6.5" rx="1.3"/>
-        <rect x="5.5" y="10" width="2.6" height="10" rx="1.3"/>
-        <rect x="10" y="11.5" width="2.6" height="8.5" rx="1.3"/>
-        <rect x="14.5" y="8.5" width="2.6" height="11.5" rx="1.3"/>
-        <path d="M2 12C3.5 10.5 4.5 11 6 9.5S8 6 10 7s2.5 2 4 1 2.5-3.5 4-4.5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="22" height="20" viewBox="0 0 22 20" fill="currentColor"><rect x="0.5" y="13" width="3" height="7" rx="1.5"/><rect x="5.5" y="9.5" width="3" height="10.5" rx="1.5"/><rect x="10.5" y="11" width="3" height="9" rx="1.5"/><rect x="15.5" y="7.5" width="3" height="12.5" rx="1.5"/><path d="M1.5 11.5c2-2 3.5-0.5 5.5-2.5s2-4.5 4.5-3 3.5 1.5 5.5-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
     </span>
     <span class="tab-label">Invest</span>
   </button>
-  <!-- Payments (with red badge) -->
+  <!-- Payments -->
   <button class="tab">
     <span class="tab-icon">
-      <!-- Two thick opposing horizontal arrows -->
-      <svg width="20" height="18" viewBox="0 0 20 18" fill="currentColor">
-        <!-- Top arrow → right -->
-        <path d="M1 3.5h11.5l-2.8-2.8a1.2 1.2 0 011.7-1.7l5 5a1.2 1.2 0 010 1.7l-5 5a1.2 1.2 0 01-1.7-1.7l2.8-2.8H1A1.35 1.35 0 011 3.5z"/>
-        <!-- Bottom arrow ← left -->
-        <path d="M19 14.5H7.5l2.8 2.8a1.2 1.2 0 01-1.7 1.7l-5-5a1.2 1.2 0 010-1.7l5-5a1.2 1.2 0 011.7 1.7L7.5 11.8H19a1.35 1.35 0 010 2.7z"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M0 5.8C0 5 .7 4.3 1.5 4.3h11.2L10 1.6a1.5 1.5 0 012.1-2.1L18 5.3a1.5 1.5 0 010 2.1l-5.8 5.8a1.5 1.5 0 01-2.1-2.1l2.7-2.7H1.5C.7 8.4 0 7.7 0 6.8v-1z"/><path d="M20 14.2c0 .8-.7 1.5-1.5 1.5H7.3l2.7 2.7a1.5 1.5 0 01-2.1 2.1L2 14.7a1.5 1.5 0 010-2.1l5.8-5.8A1.5 1.5 0 019.9 9l-2.7 2.7h11.3c.8 0 1.5.7 1.5 1.5v1z"/></svg>
       <i class="badge"></i>
     </span>
     <span class="tab-label">Payments</span>
@@ -689,30 +666,14 @@ body {
   <!-- Crypto -->
   <button class="tab">
     <span class="tab-icon">
-      <!-- Bitcoin ₿ symbol -->
-      <svg width="13" height="20" viewBox="0 0 13 20" fill="currentColor">
-        <!-- Vertical tick top left -->
-        <rect x="3.5" y="0" width="2" height="2.5" rx="0.5"/>
-        <!-- Vertical tick top right -->
-        <rect x="7.5" y="0" width="2" height="2.5" rx="0.5"/>
-        <!-- Main B body -->
-        <path d="M0 3h5c0 0 0 0 0 0h2c2.5 0 4.2 1.2 4.2 3.2 0 1.3-.7 2.3-1.9 2.8 1.6.6 2.7 1.8 2.7 3.4 0 2.3-1.8 3.8-4.5 3.8L7 16.2h-2L5 16.2H2.5c0 0 0 0 0 0H0V3zm3.5 2.5v3h3c1.2 0 2-.6 2-1.5s-.8-1.5-2-1.5h-3zm0 5.2v3.3h3.5c1.3 0 2.2-.7 2.2-1.65 0-.95-.9-1.65-2.2-1.65h-3.5z"/>
-        <!-- Vertical tick bottom left -->
-        <rect x="3.5" y="17" width="2" height="2.5" rx="0.5"/>
-        <!-- Vertical tick bottom right -->
-        <rect x="7.5" y="17" width="2" height="2.5" rx="0.5"/>
-      </svg>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="currentColor"><rect x="3.5" y="0" width="2" height="3" rx="1"/><rect x="8" y="0" width="2" height="3" rx="1"/><path d="M1 3.5h2v-1h7.5c2 0 3.5 1.4 3.5 3.2 0 1.2-.6 2.1-1.6 2.7 1.3.6 2.1 1.8 2.1 3.3 0 2-1.5 3.6-3.8 3.6H3v1H1V3.5zm4 2.5v3h4.5c1 0 1.6-.6 1.6-1.5S10.5 6 9.5 6H5zm0 5v3.5h5c1.1 0 1.8-.7 1.8-1.75S11.1 11 10 11H5z"/><rect x="3.5" y="17" width="2" height="3" rx="1"/><rect x="8" y="17" width="2" height="3" rx="1"/></svg>
     </span>
     <span class="tab-label">Crypto</span>
   </button>
   <!-- RevPoints -->
   <button class="tab">
     <span class="tab-icon">
-      <!-- Rounded hexagon with 4-point sparkle cutout -->
-      <svg width="19" height="20" viewBox="0 0 19 20" fill="currentColor" fill-rule="evenodd">
-        <path d="M9.5 0C10.6 0 11.6 0.4 12.4 1.1L17 5.2C17.9 6 18.5 7.1 18.5 8.4v3.2c0 1.3-0.6 2.4-1.5 3.2l-4.6 4.1C11.6 19.6 10.6 20 9.5 20s-2.1-0.4-2.9-1.1L2 14.8C1.1 14 0.5 12.9 0.5 11.6V8.4C0.5 7.1 1.1 6 2 5.2l4.6-4.1C7.4 0.4 8.4 0 9.5 0z
-        M9.5 5.8l-1 2.7-2.7 1 2.7 1 1 2.7 1-2.7 2.7-1-2.7-1z"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" fill-rule="evenodd"><path d="M10 .3a3.5 3.5 0 012.2.8l4.5 3.8c1 .8 1.6 2 1.6 3.4v3.4c0 1.4-.6 2.6-1.6 3.4l-4.5 3.8a3.5 3.5 0 01-2.2.8 3.5 3.5 0 01-2.2-.8L3.3 15.1C2.3 14.3 1.7 13.1 1.7 11.7V8.3c0-1.4.6-2.6 1.6-3.4L7.8 1.1A3.5 3.5 0 0110 .3zM10 5.5L8.7 8.7 5.5 10l3.2 1.3L10 14.5l1.3-3.2L14.5 10l-3.2-1.3L10 5.5z"/></svg>
     </span>
     <span class="tab-label">RevPoints</span>
   </button>
