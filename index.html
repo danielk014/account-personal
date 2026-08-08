@@ -285,17 +285,17 @@ body {
 .tx-amount .primary { font-size: 15px; font-weight: 600; }
 .tx-amount .secondary { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-/* Bottom nav - fixed flush to bottom */
+/* Bottom nav */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: #13101F;
-  border-radius: 22px 22px 0 0;
+  background: #151122;
+  border-radius: 18px 18px 0 0;
   display: flex;
-  justify-content: space-evenly;
-  align-items: flex-end;
-  padding: 0 6px;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 4px 4px;
+  padding-bottom: max(4px, env(safe-area-inset-bottom, 0px));
   z-index: 50;
 }
 .bnav-item {
@@ -303,36 +303,34 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 12px 0 10px;
+  gap: 2px;
   flex: 1;
   color: rgba(255,255,255,0.4);
   text-decoration: none;
-  position: relative;
 }
 .bnav-item.active {
   color: #fff;
 }
-.bnav-item.active .bnav-icon-wrap {
-  background: rgba(255,255,255,0.1);
-  border-radius: 14px;
-  padding: 6px 18px;
-}
 .bnav-item .bnav-icon-wrap {
   display: flex; align-items: center; justify-content: center;
-  padding: 6px 18px;
+  height: 32px; width: 32px;
+  border-radius: 10px;
+}
+.bnav-item.active .bnav-icon-wrap {
+  background: rgba(255,255,255,0.12);
+  width: 48px;
 }
 .bnav-item .bnav-icon {
-  width: 26px; height: 26px;
+  width: 22px; height: 22px;
   display: flex; align-items: center; justify-content: center;
 }
 .bnav-item .bnav-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.1px;
 }
 
-.bottom-spacer { height: 90px; }
+.bottom-spacer { height: 72px; }
 
 /* Modal */
 .modal-overlay {
@@ -609,35 +607,32 @@ body {
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
-  <!-- Home -->
   <div class="bnav-item active">
     <div class="bnav-icon-wrap">
       <div class="bnav-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <text x="12" y="18" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="-apple-system, Helvetica, sans-serif">R</text>
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <text x="10" y="16" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-family="-apple-system,Helvetica,sans-serif">R</text>
         </svg>
       </div>
     </div>
     <span class="bnav-label">Home</span>
   </div>
-  <!-- Invest -->
   <div class="bnav-item">
     <div class="bnav-icon-wrap">
       <div class="bnav-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <rect x="4" y="14" width="3.5" height="7" rx="1.5" fill="currentColor"/>
-          <rect x="10.25" y="9" width="3.5" height="12" rx="1.5" fill="currentColor"/>
-          <rect x="16.5" y="4" width="3.5" height="17" rx="1.5" fill="currentColor"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="4.5" y="14" width="3" height="7" rx="1.5" fill="currentColor"/>
+          <rect x="10.5" y="9" width="3" height="12" rx="1.5" fill="currentColor"/>
+          <rect x="16.5" y="4" width="3" height="17" rx="1.5" fill="currentColor"/>
         </svg>
       </div>
     </div>
     <span class="bnav-label">Invest</span>
   </div>
-  <!-- Payments - swap arrows -->
   <div class="bnav-item">
     <div class="bnav-icon-wrap">
       <div class="bnav-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M17 4l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M4 7h16" stroke-linecap="round"/>
           <path d="M7 20l-3-3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -647,26 +642,23 @@ body {
     </div>
     <span class="bnav-label">Payments</span>
   </div>
-  <!-- Crypto -->
   <div class="bnav-item">
     <div class="bnav-icon-wrap">
       <div class="bnav-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <text x="12" y="18" text-anchor="middle" fill="currentColor" font-size="19" font-weight="600" font-family="-apple-system, Helvetica, sans-serif">&#x20BF;</text>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <text x="12" y="17.5" text-anchor="middle" fill="currentColor" font-size="18" font-weight="600" font-family="-apple-system,Helvetica,sans-serif">&#x20BF;</text>
         </svg>
       </div>
     </div>
     <span class="bnav-label">Crypto</span>
   </div>
-  <!-- RevPoints -->
   <div class="bnav-item">
     <div class="bnav-icon-wrap">
       <div class="bnav-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <!-- Target/bullseye with cursor -->
-          <circle cx="11" cy="13" r="8" stroke="currentColor" stroke-width="1.8" fill="none"/>
-          <circle cx="11" cy="13" r="3.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
-          <path d="M17 3l1 5.5L12.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="13" r="7.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          <circle cx="11" cy="13" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          <path d="M17 3l1 5-5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
     </div>
