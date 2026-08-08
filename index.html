@@ -16,13 +16,15 @@
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   background: #2B1B5E;
   color: #fff;
 }
 body {
+  max-width: 393px;
+  margin: 0 auto;
   background: linear-gradient(180deg,
     #AD1FF6 0%,
     #A42AF6 6%,
@@ -40,8 +42,19 @@ body {
     #3578C2 78%,
     #307EBC 86%,
     #2C84B6 100%);
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+}
+
+.scroll-area {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 100px;
 }
 
 /* Status bar spacer */
@@ -302,7 +315,10 @@ body {
 /* Bottom tab bar — canvas rendered */
 .tabbar-wrap {
   position: fixed;
-  left: 16px; right: 16px; bottom: 21px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(min(100vw, 393px) - 32px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 21px);
   height: 62px;
   z-index: 50;
   pointer-events: none;
@@ -313,7 +329,18 @@ body {
   display: block;
 }
 
-.bottom-spacer { height: 0; }
+/* Home indicator bar */
+.home-indicator {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 3px;
+  z-index: 51;
+}
 
 /* Modal */
 .modal-overlay {
@@ -376,6 +403,8 @@ body {
 </head>
 <body>
 
+<div class="scroll-area">
+
 <div class="status-bar-area"></div>
 
 <!-- Top Nav Controls -->
@@ -386,7 +415,6 @@ body {
     <span>Search</span>
   </div>
   <div class="nav-icon">
-    <!-- Analytics: 3 bottom-aligned rounded bars (short, tall, medium) -->
     <svg width="19" height="18" viewBox="0 0 19 18" fill="rgba(255,230,255,0.9)">
       <rect x="0" y="10" width="5" height="8" rx="2.5"/>
       <rect x="7" y="1" width="5" height="17" rx="2.5"/>
@@ -394,7 +422,6 @@ body {
     </svg>
   </div>
   <div class="nav-icon">
-    <!-- Credit card - bold filled -->
     <svg width="21" height="16" viewBox="0 0 21 16" fill="rgba(255,230,255,0.9)">
       <rect x="0" y="0" width="21" height="16" rx="3"/>
       <rect x="0" y="4.5" width="21" height="3.5" fill="rgba(180,60,255,0.5)"/>
@@ -435,7 +462,6 @@ body {
   </div>
   <div class="action-btn">
     <div class="action-circle">
-      <!-- Diamond/rhombus swap icon like Revolut -->
       <svg width="26" height="26" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
         <path d="M12 2L22 12L12 22L2 12Z" stroke-linejoin="round"/>
         <path d="M8 12h8M15 9l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -502,7 +528,6 @@ body {
 
 <!-- Transactions - Yesterday -->
 <div class="transactions">
-  <!-- Vomar -->
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:#cc0000;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;padding:2px;">
@@ -518,7 +543,6 @@ body {
       <div class="primary">-€8.46</div>
     </div>
   </div>
-  <!-- Vomar -->
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:#cc0000;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;padding:2px;">
@@ -534,7 +558,6 @@ body {
       <div class="primary">-€18.85</div>
     </div>
   </div>
-  <!-- Thuisbezorgd.nl -->
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:#FF7B00;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
@@ -554,7 +577,6 @@ body {
       <div class="primary">-€31.98</div>
     </div>
   </div>
-  <!-- McDonald's -->
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:#FFC72C;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
@@ -571,7 +593,6 @@ body {
       <div class="primary">-€24.10</div>
     </div>
   </div>
-  <!-- Declined card payment -->
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:rgba(255,255,255,0.12);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
@@ -592,10 +613,11 @@ body {
   </div>
 </div>
 
-<div class="bottom-spacer"></div>
+</div><!-- end scroll-area -->
 
-<!-- Bottom Tab Bar (canvas-rendered) -->
+<!-- Bottom Tab Bar (canvas-rendered, fixed) -->
 <div class="tabbar-wrap"><canvas id="tabbarCanvas"></canvas></div>
+<div class="home-indicator"></div>
 
 <!-- Edit Modal -->
 <div class="modal-overlay" id="modal">
@@ -611,11 +633,11 @@ body {
 
 <script>
 function openModal() {
-  const main = document.getElementById('balMain').textContent;
-  const dec = document.getElementById('balDec').textContent;
+  var main = document.getElementById('balMain').textContent;
+  var dec = document.getElementById('balDec').textContent;
   document.getElementById('balanceInput').value = main.replace(/,/g,'') + '.' + dec;
   document.getElementById('modal').classList.add('show');
-  setTimeout(() => document.getElementById('balanceInput').focus(), 100);
+  setTimeout(function(){ document.getElementById('balanceInput').focus(); }, 100);
 }
 
 function closeModal() {
@@ -623,10 +645,10 @@ function closeModal() {
 }
 
 function saveBalance() {
-  const val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
+  var val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
   if (!val) { closeModal(); return; }
-  const parts = parseFloat(val).toFixed(2).split('.');
-  const mainPart = parseInt(parts[0]).toLocaleString('en');
+  var parts = parseFloat(val).toFixed(2).split('.');
+  var mainPart = parseInt(parts[0]).toLocaleString('en');
   document.getElementById('balMain').textContent = mainPart;
   document.getElementById('balDec').textContent = parts[1];
   closeModal();
@@ -642,19 +664,18 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
 
 // ─── Draw bottom tab bar on canvas ───
 (function(){
-  const dpr = window.devicePixelRatio || 3;
-  const wrap = document.querySelector('.tabbar-wrap');
-  const cv = document.getElementById('tabbarCanvas');
-  const W_CSS = wrap.offsetWidth, H_CSS = 62;
-  const W = W_CSS * dpr, H = H_CSS * dpr;
+  var dpr = window.devicePixelRatio || 3;
+  var wrap = document.querySelector('.tabbar-wrap');
+  var cv = document.getElementById('tabbarCanvas');
+  var W_CSS = wrap.offsetWidth, H_CSS = 62;
+  var W = W_CSS * dpr, H = H_CSS * dpr;
   cv.width = W; cv.height = H;
-  const g = cv.getContext('2d');
+  var g = cv.getContext('2d');
   g.scale(dpr, dpr);
-  const w = W_CSS, h = H_CSS;
+  var w = W_CSS, h = H_CSS;
 
   function rr(x,y,bw,bh,r){ g.beginPath(); g.moveTo(x+r,y); g.lineTo(x+bw-r,y); g.quadraticCurveTo(x+bw,y,x+bw,y+r); g.lineTo(x+bw,y+bh-r); g.quadraticCurveTo(x+bw,y+bh,x+bw-r,y+bh); g.lineTo(x+r,y+bh); g.quadraticCurveTo(x,y+bh,x,y+bh-r); g.lineTo(x,y+r); g.quadraticCurveTo(x,y,x+r,y); g.closePath(); }
 
-  // Bar bg
   g.save();
   rr(0,0,w,h,31);
   g.clip();
@@ -662,7 +683,6 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
   g.fillRect(0,0,w,h);
   g.restore();
 
-  // Rim
   g.save();
   rr(0.5,0.5,w-1,h-1,30.5);
   g.strokeStyle='rgba(85,81,204,0.55)';
@@ -672,7 +692,6 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
 
   var slot=w/5;
 
-  // Active pill
   var pw=77,ph=54,pcx=slot/2;
   g.save();
   rr(pcx-pw/2, h/2-ph/2, pw, ph, 27);
@@ -686,7 +705,6 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
   labels.forEach(function(label,i){
     var cx=slot*i+slot/2;
     var col=i===0?activeCol:inactiveCol;
-    // Label
     g.fillStyle=col;
     g.font=(i===0?'600':'500')+' 10px -apple-system,"SF Pro Text",sans-serif';
     g.textAlign='center';
@@ -694,7 +712,6 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
     g.fillText(label, cx, h-8);
   });
 
-  // Icons
   var s=slot;
 
   // Home R
@@ -738,30 +755,27 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
     g.lineJoin='round';
     g.lineWidth=2.5;
     var y1=h/2-8,y2=h/2+4;
-    // Top arrow right
     g.beginPath(); g.moveTo(cx-9,y1); g.lineTo(cx+7,y1); g.stroke();
     g.beginPath(); g.moveTo(cx+2,y1-5); g.lineTo(cx+9,y1); g.lineTo(cx+2,y1+5); g.stroke();
-    // Bottom arrow left
     g.beginPath(); g.moveTo(cx+9,y2); g.lineTo(cx-7,y2); g.stroke();
     g.beginPath(); g.moveTo(cx-2,y2-5); g.lineTo(cx-9,y2); g.lineTo(cx-2,y2+5); g.stroke();
-    // Badge
     g.fillStyle='#EB5545';
     g.beginPath();
     g.arc(cx+11, h/2-12, 2.8, 0, Math.PI*2);
     g.fill();
   })();
 
-  // Crypto ₿
+  // Crypto
   (function(){
     var cx=s*3+s/2;
     g.fillStyle=inactiveCol;
     g.font='600 16px -apple-system,sans-serif';
     g.textAlign='center';
     g.textBaseline='middle';
-    g.fillText('₿', cx, h/2-5);
+    g.fillText('\u20BF', cx, h/2-5);
   })();
 
-  // RevPoints — hexagon with sparkle
+  // RevPoints hexagon
   (function(){
     var cx=s*4+s/2, cy=h/2-5;
     g.fillStyle=inactiveCol;
@@ -774,7 +788,6 @@ document.getElementById('balanceInput').addEventListener('keydown', function(e) 
     }
     g.closePath();
     g.fill();
-    // Sparkle cutout
     g.save();
     g.globalCompositeOperation='destination-out';
     g.beginPath();
