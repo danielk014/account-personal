@@ -327,75 +327,18 @@ body {
 .tx-amount .primary { font-size: 15px; font-weight: 600; }
 .tx-amount .secondary { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-/* Bottom tab bar — floating capsule */
-.tabbar {
+/* Bottom tab bar — canvas rendered */
+.tabbar-wrap {
   position: fixed;
   left: 16px; right: 16px; bottom: 21px;
   height: 62px;
-  padding: 0 6px;
-  display: flex;
-  align-items: center;
-  border-radius: 31px;
-  background: rgba(30,28,68,0.92);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  backdrop-filter: blur(20px) saturate(140%);
-  box-shadow:
-    inset 0 0 0 1px rgba(100,95,220,0.45),
-    0 8px 24px rgba(8,6,40,0.5);
-  overflow: visible;
   z-index: 50;
-}
-.tab {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: 0;
-  padding: 0;
-  color: rgba(180,183,210,0.85);
-  -webkit-appearance: none;
-  cursor: pointer;
-  outline: none;
-}
-.tab.is-active { color: #EEEEF6; }
-.tab .pill {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%,-50%);
-  width: 78px; height: 52px;
-  border-radius: 26px;
-  background: rgba(255,255,255,0.08);
   pointer-events: none;
 }
-.tab .tab-icon {
-  position: relative;
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1;
-}
-.tab .tab-icon svg {
+.tabbar-wrap canvas {
+  width: 100%;
+  height: 100%;
   display: block;
-}
-.tab .tab-label {
-  font: 500 10px/12px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  letter-spacing: 0.1px;
-  white-space: nowrap;
-  z-index: 1;
-}
-.tab.is-active .tab-label {
-  font-weight: 600;
-}
-.tab .badge {
-  position: absolute;
-  top: 0px; right: -1px;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: #E85640;
 }
 
 .bottom-spacer { height: 110px; }
@@ -706,46 +649,8 @@ body {
 
 <div class="bottom-spacer"></div>
 
-<!-- Bottom Tab Bar -->
-<nav class="tabbar">
-  <!-- Home -->
-  <button class="tab is-active">
-    <span class="pill"></span>
-    <span class="tab-icon">
-      <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor"><path d="M0 0h15.2v3.6H4.2v2h4.6a5.2 5.2 0 010 10.4H4.2V20H0V0zm4.2 12h4.6a1.6 1.6 0 100-3.2H4.2V12z"/></svg>
-    </span>
-    <span class="tab-label">Home</span>
-  </button>
-  <!-- Invest -->
-  <button class="tab">
-    <span class="tab-icon">
-      <svg width="22" height="20" viewBox="0 0 22 20" fill="currentColor"><rect x="0.5" y="13" width="3" height="7" rx="1.5"/><rect x="5.5" y="9.5" width="3" height="10.5" rx="1.5"/><rect x="10.5" y="11" width="3" height="9" rx="1.5"/><rect x="15.5" y="7.5" width="3" height="12.5" rx="1.5"/><path d="M1.5 11.5c2-2 3.5-0.5 5.5-2.5s2-4.5 4.5-3 3.5 1.5 5.5-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-    </span>
-    <span class="tab-label">Invest</span>
-  </button>
-  <!-- Payments -->
-  <button class="tab">
-    <span class="tab-icon">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M0 5.8C0 5 .7 4.3 1.5 4.3h11.2L10 1.6a1.5 1.5 0 012.1-2.1L18 5.3a1.5 1.5 0 010 2.1l-5.8 5.8a1.5 1.5 0 01-2.1-2.1l2.7-2.7H1.5C.7 8.4 0 7.7 0 6.8v-1z"/><path d="M20 14.2c0 .8-.7 1.5-1.5 1.5H7.3l2.7 2.7a1.5 1.5 0 01-2.1 2.1L2 14.7a1.5 1.5 0 010-2.1l5.8-5.8A1.5 1.5 0 019.9 9l-2.7 2.7h11.3c.8 0 1.5.7 1.5 1.5v1z"/></svg>
-      <i class="badge"></i>
-    </span>
-    <span class="tab-label">Payments</span>
-  </button>
-  <!-- Crypto -->
-  <button class="tab">
-    <span class="tab-icon">
-      <svg width="14" height="20" viewBox="0 0 14 20" fill="currentColor"><rect x="3.5" y="0" width="2" height="3" rx="1"/><rect x="8" y="0" width="2" height="3" rx="1"/><path d="M1 3.5h2v-1h7.5c2 0 3.5 1.4 3.5 3.2 0 1.2-.6 2.1-1.6 2.7 1.3.6 2.1 1.8 2.1 3.3 0 2-1.5 3.6-3.8 3.6H3v1H1V3.5zm4 2.5v3h4.5c1 0 1.6-.6 1.6-1.5S10.5 6 9.5 6H5zm0 5v3.5h5c1.1 0 1.8-.7 1.8-1.75S11.1 11 10 11H5z"/><rect x="3.5" y="17" width="2" height="3" rx="1"/><rect x="8" y="17" width="2" height="3" rx="1"/></svg>
-    </span>
-    <span class="tab-label">Crypto</span>
-  </button>
-  <!-- RevPoints -->
-  <button class="tab">
-    <span class="tab-icon">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" fill-rule="evenodd"><path d="M10 .3a3.5 3.5 0 012.2.8l4.5 3.8c1 .8 1.6 2 1.6 3.4v3.4c0 1.4-.6 2.6-1.6 3.4l-4.5 3.8a3.5 3.5 0 01-2.2.8 3.5 3.5 0 01-2.2-.8L3.3 15.1C2.3 14.3 1.7 13.1 1.7 11.7V8.3c0-1.4.6-2.6 1.6-3.4L7.8 1.1A3.5 3.5 0 0110 .3zM10 5.5L8.7 8.7 5.5 10l3.2 1.3L10 14.5l1.3-3.2L14.5 10l-3.2-1.3L10 5.5z"/></svg>
-    </span>
-    <span class="tab-label">RevPoints</span>
-  </button>
-</nav>
+<!-- Bottom Tab Bar (canvas-rendered) -->
+<div class="tabbar-wrap"><canvas id="tabbarCanvas"></canvas></div>
 
 <!-- Edit Modal -->
 <div class="modal-overlay" id="modal">
@@ -789,6 +694,156 @@ document.getElementById('modal').addEventListener('click', function(e) {
 document.getElementById('balanceInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') saveBalance();
 });
+
+// ─── Draw bottom tab bar on canvas ───
+(function(){
+  const dpr = window.devicePixelRatio || 3;
+  const wrap = document.querySelector('.tabbar-wrap');
+  const cv = document.getElementById('tabbarCanvas');
+  const W_CSS = wrap.offsetWidth, H_CSS = 62;
+  const W = W_CSS * dpr, H = H_CSS * dpr;
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+  g.scale(dpr, dpr);
+  const w = W_CSS, h = H_CSS;
+
+  function rr(x,y,bw,bh,r){ g.beginPath(); g.moveTo(x+r,y); g.lineTo(x+bw-r,y); g.quadraticCurveTo(x+bw,y,x+bw,y+r); g.lineTo(x+bw,y+bh-r); g.quadraticCurveTo(x+bw,y+bh,x+bw-r,y+bh); g.lineTo(x+r,y+bh); g.quadraticCurveTo(x,y+bh,x,y+bh-r); g.lineTo(x,y+r); g.quadraticCurveTo(x,y,x+r,y); g.closePath(); }
+
+  // Bar bg
+  g.save();
+  rr(0,0,w,h,31);
+  g.clip();
+  g.fillStyle='#232252';
+  g.fillRect(0,0,w,h);
+  g.restore();
+
+  // Rim
+  g.save();
+  rr(0.5,0.5,w-1,h-1,30.5);
+  g.strokeStyle='rgba(85,81,204,0.55)';
+  g.lineWidth=1;
+  g.stroke();
+  g.restore();
+
+  var slot=w/5;
+
+  // Active pill
+  var pw=77,ph=54,pcx=slot/2;
+  g.save();
+  rr(pcx-pw/2, h/2-ph/2, pw, ph, 27);
+  g.fillStyle='rgba(255,255,255,0.10)';
+  g.fill();
+  g.restore();
+
+  var labels=['Home','Invest','Payments','Crypto','RevPoints'];
+  var activeCol='#FFFFFF', inactiveCol='#B6B5C3';
+
+  labels.forEach(function(label,i){
+    var cx=slot*i+slot/2;
+    var col=i===0?activeCol:inactiveCol;
+    // Label
+    g.fillStyle=col;
+    g.font=(i===0?'600':'500')+' 10px -apple-system,"SF Pro Text",sans-serif';
+    g.textAlign='center';
+    g.textBaseline='bottom';
+    g.fillText(label, cx, h-8);
+  });
+
+  // Icons
+  var s=slot;
+
+  // Home R
+  (function(){
+    var cx=s/2;
+    g.fillStyle=activeCol;
+    g.font='900 18px -apple-system,sans-serif';
+    g.textAlign='center';
+    g.textBaseline='middle';
+    g.fillText('R', cx, h/2-5);
+  })();
+
+  // Invest
+  (function(){
+    var cx=s*1+s/2;
+    g.fillStyle=inactiveCol;
+    var bw=2.3,gap=2.5,bh=[7,10,8.5,12];
+    var tw=bw*4+gap*3;
+    var sx=cx-tw/2, by=h/2+9;
+    bh.forEach(function(bht,i){
+      rr(sx+i*(bw+gap), by-bht, bw, bht, bw/2);
+      g.fill();
+    });
+    g.beginPath();
+    g.strokeStyle=inactiveCol;
+    g.lineWidth=2.2;
+    g.lineCap='round';
+    g.lineJoin='round';
+    g.moveTo(sx+1, h/2-2);
+    g.quadraticCurveTo(sx+5, h/2-7, sx+8, h/2-3);
+    g.quadraticCurveTo(sx+11, h/2+1, sx+14, h/2-5);
+    g.quadraticCurveTo(sx+17, h/2-11, sx+tw-1, h/2-9);
+    g.stroke();
+  })();
+
+  // Payments
+  (function(){
+    var cx=s*2+s/2;
+    g.strokeStyle=inactiveCol;
+    g.lineCap='round';
+    g.lineJoin='round';
+    g.lineWidth=2.5;
+    var y1=h/2-8,y2=h/2+4;
+    // Top arrow right
+    g.beginPath(); g.moveTo(cx-9,y1); g.lineTo(cx+7,y1); g.stroke();
+    g.beginPath(); g.moveTo(cx+2,y1-5); g.lineTo(cx+9,y1); g.lineTo(cx+2,y1+5); g.stroke();
+    // Bottom arrow left
+    g.beginPath(); g.moveTo(cx+9,y2); g.lineTo(cx-7,y2); g.stroke();
+    g.beginPath(); g.moveTo(cx-2,y2-5); g.lineTo(cx-9,y2); g.lineTo(cx-2,y2+5); g.stroke();
+    // Badge
+    g.fillStyle='#EB5545';
+    g.beginPath();
+    g.arc(cx+11, h/2-12, 2.8, 0, Math.PI*2);
+    g.fill();
+  })();
+
+  // Crypto ₿
+  (function(){
+    var cx=s*3+s/2;
+    g.fillStyle=inactiveCol;
+    g.font='600 16px -apple-system,sans-serif';
+    g.textAlign='center';
+    g.textBaseline='middle';
+    g.fillText('₿', cx, h/2-5);
+  })();
+
+  // RevPoints — hexagon with sparkle
+  (function(){
+    var cx=s*4+s/2, cy=h/2-5;
+    g.fillStyle=inactiveCol;
+    var r=9.5;
+    g.beginPath();
+    for(var i=0;i<6;i++){
+      var a=Math.PI/2+i*Math.PI/3;
+      var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+      if(i===0)g.moveTo(x,y); else g.lineTo(x,y);
+    }
+    g.closePath();
+    g.fill();
+    // Sparkle cutout
+    g.save();
+    g.globalCompositeOperation='destination-out';
+    g.beginPath();
+    var sr=5.5,si=2;
+    g.moveTo(cx,cy-sr);
+    g.quadraticCurveTo(cx+si/2,cy-si/2,cx+sr,cy);
+    g.quadraticCurveTo(cx+si/2,cy+si/2,cx,cy+sr);
+    g.quadraticCurveTo(cx-si/2,cy+si/2,cx-sr,cy);
+    g.quadraticCurveTo(cx-si/2,cy-si/2,cx,cy-sr);
+    g.closePath();
+    g.fill();
+    g.restore();
+  })();
+})();
 </script>
 
 </body>
