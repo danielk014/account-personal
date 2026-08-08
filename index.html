@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Revolut">
 <meta name="theme-color" content="#9B4DCA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="manifest" href="manifest.json">
 <title>Revolut</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -126,35 +130,39 @@ body {
   font-weight: 400;
 }
 
-/* Accounts pill + dots combined */
+/* Accounts pill with dots */
 .accounts-pill-wrap {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 32px 0 6px;
+  gap: 12px;
 }
 .accounts-pill {
-  background: rgba(200,180,255,0.2);
+  background: rgba(200,180,255,0.18);
   border-radius: 22px;
-  padding: 10px 20px;
-  font-size: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.95);
 }
-.accounts-pill .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,255,255,0.85);
+.dot-row {
+  display: flex; gap: 6px; align-items: center;
 }
-.accounts-pill .dot.dim {
-  background: rgba(255,255,255,0.3);
+.dot-row .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+}
+.dot-row .dot.dim {
   width: 6px; height: 6px;
+  background: rgba(255,255,255,0.25);
 }
 
 /* Action buttons */
 .actions {
   display: flex;
   justify-content: space-around;
-  padding: 20px 16px 18px;
+  padding: 18px 16px 18px;
 }
 .action-btn {
   display: flex; flex-direction: column;
@@ -175,13 +183,12 @@ body {
 /* Promo card */
 .promo-card {
   margin: 8px 16px 0;
-  background: rgba(160,150,200,0.2);
+  background: rgba(160,150,200,0.18);
   border-radius: 18px;
   padding: 22px 20px;
   position: relative;
   overflow: hidden;
   min-height: 110px;
-  border: 1px solid rgba(255,255,255,0.06);
 }
 .promo-card .close-btn {
   position: absolute; top: 14px; right: 16px;
@@ -223,14 +230,6 @@ body {
   top: 14px; right: 20px; transform: rotate(-5deg);
   background: linear-gradient(145deg, #1E1E32 0%, #35355A 100%);
 }
-.card-stack .card-item .revolut-text {
-  position: absolute;
-  bottom: 8px; left: 8px;
-  font-size: 6px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.5px;
-}
 .promo-dots {
   display: flex; gap: 5px; justify-content: center; padding: 12px 0 6px;
 }
@@ -243,10 +242,9 @@ body {
 /* Transactions */
 .transactions {
   margin: 6px 16px 0;
-  background: rgba(150,140,200,0.15);
+  background: rgba(150,140,200,0.14);
   border-radius: 18px;
   padding: 4px 0;
-  border: 1px solid rgba(255,255,255,0.04);
 }
 .tx-item {
   display: flex;
@@ -268,40 +266,45 @@ body {
 .tx-amount .primary { font-size: 15px; font-weight: 600; }
 .tx-amount .secondary { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-/* Bottom nav */
+/* Bottom nav - fixed flush to bottom */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: rgba(22, 18, 42, 0.94);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: #161228;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding: 0 8px;
-  padding-bottom: max(4px, env(safe-area-inset-bottom));
-  border-radius: 20px 20px 0 0;
+  justify-content: space-evenly;
+  align-items: stretch;
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 50;
 }
-.nav-item {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 2px;
-  font-size: 10px;
-  color: rgba(255,255,255,0.4);
-  padding: 10px 12px 6px;
-  min-width: 54px;
+.bnav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 0 8px;
+  flex: 1;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
   position: relative;
 }
-.nav-item.active {
+.bnav-item.active {
   color: #fff;
-  background: rgba(255,255,255,0.08);
-  border-radius: 16px 16px 0 0;
-  padding: 10px 18px 6px;
-  margin-bottom: 0;
+  background: rgba(255,255,255,0.06);
 }
-.nav-item svg { width: 26px; height: 26px; }
-.nav-item .nav-label { font-weight: 500; font-size: 10px; margin-top: 1px; }
+.bnav-item .bnav-icon {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+}
+.bnav-item .bnav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
 
-.bottom-spacer { height: 90px; }
+.bottom-spacer { height: 80px; }
 
 /* Modal */
 .modal-overlay {
@@ -358,14 +361,8 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-.btn-cancel {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-.btn-save {
-  background: #fff;
-  color: #1a0a2e;
-}
+.btn-cancel { background: rgba(255,255,255,0.1); color: #fff; }
+.btn-save { background: #fff; color: #1a0a2e; }
 </style>
 </head>
 <body>
@@ -374,21 +371,19 @@ body {
 
 <!-- Top Nav -->
 <div class="top-nav">
-  <div class="avatar" id="avatarBtn" onclick="openModal()">DK</div>
+  <div class="avatar" onclick="openModal()">DK</div>
   <div class="search-bar">
-    <svg width="20" height="20" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+    <svg width="20" height="20" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
     <span>Search</span>
   </div>
   <div class="nav-icon">
-    <!-- Bar chart icon matching screenshot -->
     <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
-      <rect x="4" y="13" width="4" height="7" rx="1" fill="rgba(255,255,255,0.9)"/>
-      <rect x="10" y="8" width="4" height="12" rx="1" fill="rgba(255,255,255,0.9)"/>
+      <rect x="4" y="14" width="4" height="6" rx="1" fill="rgba(255,255,255,0.9)"/>
+      <rect x="10" y="9" width="4" height="11" rx="1" fill="rgba(255,255,255,0.9)"/>
       <rect x="16" y="4" width="4" height="16" rx="1" fill="rgba(255,255,255,0.9)"/>
     </svg>
   </div>
   <div class="nav-icon">
-    <!-- Hamburger menu icon -->
     <svg width="20" height="20" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
   </div>
 </div>
@@ -396,19 +391,17 @@ body {
 <!-- Balance -->
 <div class="balance-section">
   <div class="account-label">Personal · EUR</div>
-  <div class="balance" onclick="openModal()"><span class="euro">€</span><span id="balMain">57</span><span class="decimal">.<span id="balDec">76</span></span></div>
+  <div class="balance" onclick="openModal()">€<span id="balMain">57</span><span class="decimal">.<span id="balDec">76</span></span></div>
   <div class="iban-row">
-    <!-- Bank building icon -->
-    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24">
-      <path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/>
-    </svg>
+    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
     <span>NL75 REVO 0942 7692 05</span>
   </div>
 </div>
 
-<!-- Accounts pill with dots -->
+<!-- Accounts pill + dots -->
 <div class="accounts-pill-wrap">
-  <div class="accounts-pill">
+  <div class="accounts-pill">Accounts</div>
+  <div class="dot-row">
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
@@ -421,35 +414,28 @@ body {
 <div class="actions">
   <div class="action-btn">
     <div class="action-circle">
-      <!-- Plus icon -->
       <svg width="28" height="28" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
     </div>
     <span class="action-label">Add money</span>
   </div>
   <div class="action-btn">
     <div class="action-circle">
-      <!-- Shuffle/swap arrows icon -->
+      <!-- Diamond/rhombus swap icon like Revolut -->
       <svg width="26" height="26" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M16 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M20 7H8" stroke-linecap="round"/>
-        <path d="M8 21l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4 17h12" stroke-linecap="round"/>
+        <path d="M12 2L22 12L12 22L2 12Z" stroke-linejoin="round"/>
+        <path d="M8 12h8M15 9l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <span class="action-label">Move</span>
   </div>
   <div class="action-btn">
     <div class="action-circle">
-      <!-- Bank/building icon -->
-      <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24">
-        <path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/>
-      </svg>
+      <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
     </div>
     <span class="action-label">Details</span>
   </div>
   <div class="action-btn">
     <div class="action-circle">
-      <!-- Three dots icon -->
       <svg width="26" height="26" fill="#fff" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>
     </div>
     <span class="action-label">More</span>
@@ -463,15 +449,12 @@ body {
   <div class="promo-sub">Earn as friends reach goals. Until August 25. T&Cs apply</div>
   <div class="promo-img">
     <div class="card-stack">
-      <div class="card-item">
-        <span class="revolut-text">Revolut</span>
-      </div>
+      <div class="card-item"></div>
       <div class="card-item"></div>
     </div>
   </div>
 </div>
 
-<!-- Promo dots -->
 <div class="promo-dots">
   <div class="dot active"></div>
   <div class="dot"></div>
@@ -500,11 +483,7 @@ body {
   <div class="tx-item">
     <div class="tx-icon" style="border-radius:14px;overflow:hidden;">
       <div style="background:#d42a2a;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <!-- Z2U swirl logo approximation -->
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M14 4C8.5 4 4 8.5 4 14s4.5 10 10 10 10-4.5 10-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <path d="M14 4c3 0 6 2 7.5 5" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
-        </svg>
+        <span style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Z2U</span>
       </div>
     </div>
     <div class="tx-info">
@@ -522,46 +501,53 @@ body {
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
-  <div class="nav-item active">
-    <!-- Revolut R icon -->
-    <svg viewBox="0 0 26 26" fill="none">
-      <text x="13" y="19" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-family="-apple-system, sans-serif">R</text>
-    </svg>
-    <span class="nav-label">Home</span>
+  <!-- Home -->
+  <div class="bnav-item active">
+    <div class="bnav-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <text x="12" y="18" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="-apple-system, Helvetica, sans-serif">R</text>
+      </svg>
+    </div>
+    <span class="bnav-label">Home</span>
   </div>
-  <div class="nav-item">
-    <!-- Invest bar chart -->
-    <svg viewBox="0 0 26 26" fill="none">
-      <rect x="4" y="15" width="3.5" height="7" rx="0.8" fill="currentColor"/>
-      <rect x="11" y="9" width="3.5" height="13" rx="0.8" fill="currentColor"/>
-      <rect x="18" y="4" width="3.5" height="18" rx="0.8" fill="currentColor"/>
-    </svg>
-    <span class="nav-label">Invest</span>
+  <!-- Invest -->
+  <div class="bnav-item">
+    <div class="bnav-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M6 20V14" stroke-linecap="round"/>
+        <path d="M12 20V8" stroke-linecap="round"/>
+        <path d="M18 20V4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="bnav-label">Invest</span>
   </div>
-  <div class="nav-item">
-    <!-- Payments swap arrows -->
-    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M16 5l3.5 3.5L16 12" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M6 8.5h13.5" stroke-linecap="round"/>
-      <path d="M10 21l-3.5-3.5L10 14" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M20 17.5H6.5" stroke-linecap="round"/>
-    </svg>
-    <span class="nav-label">Payments</span>
+  <!-- Payments - diamond/rhombus -->
+  <div class="bnav-item">
+    <div class="bnav-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 3L21 12L12 21L3 12Z" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="bnav-label">Payments</span>
   </div>
-  <div class="nav-item">
-    <!-- Bitcoin B -->
-    <svg viewBox="0 0 26 26" fill="none">
-      <text x="13" y="19" text-anchor="middle" fill="currentColor" font-size="18" font-weight="700" font-family="-apple-system, sans-serif">&#x20BF;</text>
-    </svg>
-    <span class="nav-label">Crypto</span>
+  <!-- Crypto -->
+  <div class="bnav-item">
+    <div class="bnav-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <text x="12" y="18" text-anchor="middle" fill="currentColor" font-size="20" font-weight="600" font-family="-apple-system, Helvetica, sans-serif">&#x20BF;</text>
+      </svg>
+    </div>
+    <span class="bnav-label">Crypto</span>
   </div>
-  <div class="nav-item">
-    <!-- RevPoints plus in circle -->
-    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8">
-      <circle cx="13" cy="13" r="9"/>
-      <path d="M13 8.5v9M8.5 13h9" stroke-linecap="round"/>
-    </svg>
-    <span class="nav-label">RevPoints</span>
+  <!-- RevPoints -->
+  <div class="bnav-item">
+    <div class="bnav-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="8.5"/>
+        <path d="M12 7.5v9M7.5 12h9" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="bnav-label">RevPoints</span>
   </div>
 </div>
 

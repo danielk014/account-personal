@@ -1,0 +1,21 @@
+{
+  "name": "Revolut",
+  "short_name": "Revolut",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#191938",
+  "theme_color": "#191938",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
