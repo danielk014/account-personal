@@ -285,52 +285,73 @@ body {
 .tx-amount .primary { font-size: 15px; font-weight: 600; }
 .tx-amount .secondary { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-/* Bottom nav */
-.bottom-nav {
+/* Bottom tab bar — floating capsule */
+.tabbar {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: #151122;
-  border-radius: 18px 18px 0 0;
+  left: 16px; right: 16px; bottom: 21px;
+  height: 62px;
+  padding: 4px 9px;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  padding: 6px 4px 4px;
-  padding-bottom: max(4px, env(safe-area-inset-bottom, 0px));
+  border-radius: 31px;
+  background: rgba(18,16,58,0.86);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  box-shadow: inset 0 0 0 0.5px rgba(120,114,235,0.6);
+  overflow: visible;
   z-index: 50;
 }
-.bnav-item {
+.tab {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  flex: 1;
-  color: rgba(255,255,255,0.4);
-  text-decoration: none;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: rgba(255,255,255,0.67);
+  -webkit-appearance: none;
+  cursor: pointer;
 }
-.bnav-item.active {
-  color: #fff;
+.tab.is-active { color: #fff; }
+.tab .pill {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: 77px; height: 54px;
+  border-radius: 27px;
+  background: rgba(255,255,255,0.10);
+  pointer-events: none;
 }
-.bnav-item .bnav-icon-wrap {
+.tab .tab-icon {
+  position: relative;
+  width: 20px; height: 20px;
   display: flex; align-items: center; justify-content: center;
-  height: 32px; width: 32px;
-  border-radius: 10px;
+  z-index: 1;
 }
-.bnav-item.active .bnav-icon-wrap {
-  background: rgba(255,255,255,0.12);
-  width: 48px;
+.tab .tab-icon svg {
+  width: 100%; height: 100%;
+  display: block;
 }
-.bnav-item .bnav-icon {
-  width: 22px; height: 22px;
-  display: flex; align-items: center; justify-content: center;
+.tab .tab-label {
+  font: 600 10px/12px -apple-system, "SF Pro Text", Inter, system-ui, sans-serif;
+  letter-spacing: 0;
+  white-space: nowrap;
+  z-index: 1;
 }
-.bnav-item .bnav-label {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.1px;
+.tab .badge {
+  position: absolute;
+  top: -2px; right: -3px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #EB5545;
 }
 
-.bottom-spacer { height: 72px; }
+.bottom-spacer { height: 100px; }
 
 /* Modal */
 .modal-overlay {
@@ -612,66 +633,68 @@ body {
 
 <div class="bottom-spacer"></div>
 
-<!-- Bottom Navigation -->
-<div class="bottom-nav">
-  <div class="bnav-item active">
-    <div class="bnav-icon-wrap">
-      <div class="bnav-icon">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-          <text x="10" y="16" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-family="-apple-system,Helvetica,sans-serif">R</text>
-        </svg>
-      </div>
-    </div>
-    <span class="bnav-label">Home</span>
-  </div>
-  <div class="bnav-item">
-    <div class="bnav-icon-wrap">
-      <div class="bnav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <rect x="4.5" y="14" width="3" height="7" rx="1.5" fill="currentColor"/>
-          <rect x="10.5" y="9" width="3" height="12" rx="1.5" fill="currentColor"/>
-          <rect x="16.5" y="4" width="3" height="17" rx="1.5" fill="currentColor"/>
-        </svg>
-      </div>
-    </div>
-    <span class="bnav-label">Invest</span>
-  </div>
-  <div class="bnav-item">
-    <div class="bnav-icon-wrap">
-      <div class="bnav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M17 4l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M4 7h16" stroke-linecap="round"/>
-          <path d="M7 20l-3-3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M20 17H4" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-    <span class="bnav-label">Payments</span>
-  </div>
-  <div class="bnav-item">
-    <div class="bnav-icon-wrap">
-      <div class="bnav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <text x="12" y="17.5" text-anchor="middle" fill="currentColor" font-size="18" font-weight="600" font-family="-apple-system,Helvetica,sans-serif">&#x20BF;</text>
-        </svg>
-      </div>
-    </div>
-    <span class="bnav-label">Crypto</span>
-  </div>
-  <div class="bnav-item">
-    <div class="bnav-icon-wrap">
-      <div class="bnav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="11" cy="13" r="7.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
-          <circle cx="11" cy="13" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/>
-          <path d="M17 3l1 5-5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-    <span class="bnav-label">RevPoints</span>
-  </div>
-</div>
+<!-- Bottom Tab Bar -->
+<nav class="tabbar">
+  <!-- Home (active) -->
+  <button class="tab is-active">
+    <span class="pill"></span>
+    <span class="tab-icon">
+      <!-- Revolut R mark -->
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path d="M4 1h9.5v3.2H7.8v1.2h4.8c2 0 3.4 1.5 3.4 3.3 0 1.4-.8 2.5-2 3l3 6.3h-4.2l-2.6-5.5H7.8V18H4V1z"/>
+      </svg>
+    </span>
+    <span class="tab-label">Home</span>
+  </button>
+  <!-- Invest -->
+  <button class="tab">
+    <span class="tab-icon">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <!-- 4 bars: short, tall, medium, tallest -->
+        <rect x="1" y="13" width="2.8" height="6" rx="1.4"/>
+        <rect x="5.8" y="9" width="2.8" height="10" rx="1.4"/>
+        <rect x="10.6" y="11" width="2.8" height="8" rx="1.4"/>
+        <rect x="15.4" y="7" width="2.8" height="12" rx="1.4"/>
+        <!-- wavy trend line -->
+        <path d="M1.5 10C3.5 8 5 11 7.5 9s3-4 5-2.5 3 1 5.5-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="tab-label">Invest</span>
+  </button>
+  <!-- Payments (with red badge) -->
+  <button class="tab">
+    <span class="tab-icon">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <!-- Top arrow pointing right -->
+        <path d="M3 4.5h10l-3.2-3a1 1 0 011.4-1.4l5 4.5a1 1 0 010 1.4l-5 4.5a1 1 0 01-1.4-1.4l3.2-3H3a1 1 0 010-2z"/>
+        <!-- Bottom arrow pointing left -->
+        <path d="M17 15.5H7l3.2 3a1 1 0 01-1.4 1.4l-5-4.5a1 1 0 010-1.4l5-4.5a1 1 0 011.4 1.4l-3.2 3H17a1 1 0 010 2z"/>
+      </svg>
+      <i class="badge"></i>
+    </span>
+    <span class="tab-label">Payments</span>
+  </button>
+  <!-- Crypto -->
+  <button class="tab">
+    <span class="tab-icon">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <!-- Bitcoin B symbol -->
+        <path d="M7 1.5h1V0h1.5v1.5H11V0h1.5v1.5c2.2.3 3.5 1.5 3.5 3.2 0 1.3-.7 2.3-1.8 2.8 1.4.5 2.3 1.7 2.3 3.2 0 2-1.6 3.5-4 3.8V16H11v-1.5H9.5V16H8v-1.5H5V13h2V5.5H5V4h2V1.5zm3 3v3h2.5c1 0 1.7-.6 1.7-1.5S13.5 4.5 12.5 4.5H10zm0 5v3.5h3c1.1 0 1.8-.7 1.8-1.7 0-1.1-.7-1.8-1.8-1.8H10z"/>
+      </svg>
+    </span>
+    <span class="tab-label">Crypto</span>
+  </button>
+  <!-- RevPoints -->
+  <button class="tab">
+    <span class="tab-icon">
+      <svg viewBox="0 0 20 20" fill="currentColor" fill-rule="evenodd">
+        <!-- Rounded hexagon with sparkle knocked out -->
+        <path d="M10 0.5c0.8 0 1.5 0.3 2 0.8l5 4.2c0.8 0.7 1.3 1.7 1.3 2.8v3.4c0 1.1-0.5 2.1-1.3 2.8l-5 4.2c-0.5 0.5-1.2 0.8-2 0.8s-1.5-0.3-2-0.8l-5-4.2C2.2 13.8 1.7 12.8 1.7 11.7V8.3C1.7 7.2 2.2 6.2 3 5.5l5-4.2C8.5 0.8 9.2 0.5 10 0.5zM10 6.5c0.4 0.9 0.6 1.1 1.5 1.5-0.9 0.4-1.1 0.6-1.5 1.5-0.4-0.9-0.6-1.1-1.5-1.5C9.4 7.6 9.6 7.4 10 6.5zM10 10.5c0.4 0.9 0.6 1.1 1.5 1.5-0.9 0.4-1.1 0.6-1.5 1.5-0.4-0.9-0.6-1.1-1.5-1.5C9.4 11.6 9.6 11.4 10 10.5z"/>
+      </svg>
+    </span>
+    <span class="tab-label">RevPoints</span>
+  </button>
+</nav>
 
 <!-- Edit Modal -->
 <div class="modal-overlay" id="modal">
