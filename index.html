@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Revolut">
 <meta name="theme-color" content="#9B4DCA">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="manifest" href="manifest.json">
 <title>Revolut</title>
@@ -288,11 +289,12 @@ body {
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: #161228;
+  background: #13101F;
+  border-radius: 22px 22px 0 0;
   display: flex;
   justify-content: space-evenly;
-  align-items: stretch;
-  padding: 0;
+  align-items: flex-end;
+  padding: 0 6px;
   padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 50;
 }
@@ -301,19 +303,27 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 10px 0 8px;
+  gap: 4px;
+  padding: 12px 0 10px;
   flex: 1;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.4);
   text-decoration: none;
   position: relative;
 }
 .bnav-item.active {
   color: #fff;
-  background: rgba(255,255,255,0.06);
+}
+.bnav-item.active .bnav-icon-wrap {
+  background: rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 6px 18px;
+}
+.bnav-item .bnav-icon-wrap {
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px 18px;
 }
 .bnav-item .bnav-icon {
-  width: 28px; height: 28px;
+  width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center;
 }
 .bnav-item .bnav-label {
@@ -322,7 +332,7 @@ body {
   letter-spacing: 0.1px;
 }
 
-.bottom-spacer { height: 80px; }
+.bottom-spacer { height: 90px; }
 
 /* Modal */
 .modal-overlay {
@@ -601,49 +611,64 @@ body {
 <div class="bottom-nav">
   <!-- Home -->
   <div class="bnav-item active">
-    <div class="bnav-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <text x="12" y="18" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="-apple-system, Helvetica, sans-serif">R</text>
-      </svg>
+    <div class="bnav-icon-wrap">
+      <div class="bnav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <text x="12" y="18" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="-apple-system, Helvetica, sans-serif">R</text>
+        </svg>
+      </div>
     </div>
     <span class="bnav-label">Home</span>
   </div>
   <!-- Invest -->
   <div class="bnav-item">
-    <div class="bnav-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M6 20V14" stroke-linecap="round"/>
-        <path d="M12 20V8" stroke-linecap="round"/>
-        <path d="M18 20V4" stroke-linecap="round"/>
-      </svg>
+    <div class="bnav-icon-wrap">
+      <div class="bnav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="14" width="3.5" height="7" rx="1.5" fill="currentColor"/>
+          <rect x="10.25" y="9" width="3.5" height="12" rx="1.5" fill="currentColor"/>
+          <rect x="16.5" y="4" width="3.5" height="17" rx="1.5" fill="currentColor"/>
+        </svg>
+      </div>
     </div>
     <span class="bnav-label">Invest</span>
   </div>
-  <!-- Payments - diamond/rhombus -->
+  <!-- Payments - swap arrows -->
   <div class="bnav-item">
-    <div class="bnav-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M12 3L21 12L12 21L3 12Z" stroke-linejoin="round"/>
-      </svg>
+    <div class="bnav-icon-wrap">
+      <div class="bnav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 4l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 7h16" stroke-linecap="round"/>
+          <path d="M7 20l-3-3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 17H4" stroke-linecap="round"/>
+        </svg>
+      </div>
     </div>
     <span class="bnav-label">Payments</span>
   </div>
   <!-- Crypto -->
   <div class="bnav-item">
-    <div class="bnav-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <text x="12" y="18" text-anchor="middle" fill="currentColor" font-size="20" font-weight="600" font-family="-apple-system, Helvetica, sans-serif">&#x20BF;</text>
-      </svg>
+    <div class="bnav-icon-wrap">
+      <div class="bnav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <text x="12" y="18" text-anchor="middle" fill="currentColor" font-size="19" font-weight="600" font-family="-apple-system, Helvetica, sans-serif">&#x20BF;</text>
+        </svg>
+      </div>
     </div>
     <span class="bnav-label">Crypto</span>
   </div>
   <!-- RevPoints -->
   <div class="bnav-item">
-    <div class="bnav-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <circle cx="12" cy="12" r="8.5"/>
-        <path d="M12 7.5v9M7.5 12h9" stroke-linecap="round"/>
-      </svg>
+    <div class="bnav-icon-wrap">
+      <div class="bnav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <!-- Target/bullseye with cursor -->
+          <circle cx="11" cy="13" r="8" stroke="currentColor" stroke-width="1.8" fill="none"/>
+          <circle cx="11" cy="13" r="3.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+          <path d="M17 3l1 5.5L12.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
     <span class="bnav-label">RevPoints</span>
   </div>
