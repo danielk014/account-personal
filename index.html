@@ -13,125 +13,117 @@
 <link rel="manifest" href="manifest.json">
 <title>Revolut</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html {
-  height: 100%;
-  overflow: hidden;
-  background: #8040E8;
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  width:100%;height:100%;
+  overflow:hidden;
+  background:#2C84B6;
 }
-body {
-  width: 100%;
-  max-width: 393px;
-  margin: 0 auto;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
+body{
+  max-width:393px;
+  margin:0 auto;
+  position:relative;
 }
-.bg {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: fill;
+.bg{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
 }
-/* Invisible tap target over the balance area in the image */
-.balance-tap {
-  position: absolute;
-  top: 14%;
-  left: 15%;
-  width: 70%;
-  height: 5%;
-  z-index: 10;
-  cursor: pointer;
+.balance-tap{
+  position:absolute;
+  top:13.5%;
+  left:10%;
+  width:80%;
+  height:6%;
+  z-index:20;
+  cursor:pointer;
 }
-/* Overlay that covers the original balance — hidden until first edit */
-.balance-overlay {
-  display: none;
-  position: absolute;
-  top: 14.1%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-  font-size: 54px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -1px;
-  line-height: 1;
-  text-align: center;
-  z-index: 9;
-  pointer-events: none;
-  padding: 10px 40px;
+.balance-cover{
+  display:none;
+  position:absolute;
+  top:13.5%;
+  left:0;
+  width:100%;
+  height:6%;
+  z-index:15;
 }
-.balance-overlay .decimal {
-  font-size: 30px;
-  font-weight: 600;
-  vertical-align: top;
-  position: relative;
-  top: 4px;
-  letter-spacing: 0;
+.balance-text{
+  display:none;
+  position:absolute;
+  top:14.2%;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:16;
+  pointer-events:none;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  font-size:54px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-1px;
+  line-height:1;
+  text-align:center;
+  white-space:nowrap;
 }
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
+.balance-text .dec{
+  font-size:30px;
+  font-weight:600;
+  vertical-align:top;
+  position:relative;
+  top:4px;
+  letter-spacing:0;
 }
-.modal-overlay.show { display: flex; }
-.modal {
-  background: #2E1B55;
-  border-radius: 20px;
-  padding: 28px 24px;
-  width: 85%;
-  max-width: 340px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.1);
+.modal-overlay{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
 }
-.modal h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+.modal-overlay.show{display:flex}
+.modal{
+  background:#2E1B55;
+  border-radius:20px;
+  padding:28px 24px;
+  width:85%;max-width:340px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.1);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
 }
-.modal input {
-  width: 100%;
-  background: rgba(255,255,255,0.08);
-  border: 1.5px solid rgba(255,255,255,0.2);
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 28px;
-  font-weight: 400;
-  color: #fff;
-  text-align: center;
-  outline: none;
-  -webkit-appearance: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+.modal h3{font-size:18px;font-weight:600;margin-bottom:20px;color:#fff}
+.modal input{
+  width:100%;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:28px;font-weight:400;
+  color:#fff;text-align:center;
+  outline:none;-webkit-appearance:none;
+  font-family:inherit;
 }
-.modal input:focus { border-color: rgba(255,255,255,0.45); }
-.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-.modal-btns button {
-  flex: 1; padding: 14px; border-radius: 12px; border: none;
-  font-size: 15px; font-weight: 600; cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+.modal input:focus{border-color:rgba(255,255,255,0.45)}
+.modal-btns{display:flex;gap:10px;margin-top:20px}
+.modal-btns button{
+  flex:1;padding:14px;border-radius:12px;border:none;
+  font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;
 }
-.btn-cancel { background: rgba(255,255,255,0.1); color: #fff; }
-.btn-save { background: #fff; color: #1a0a2e; }
+.btn-cancel{background:rgba(255,255,255,0.1);color:#fff}
+.btn-save{background:#fff;color:#1a0a2e}
 </style>
 </head>
 <body>
 
-<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg" />
-<div class="balance-tap" onclick="openModal()"></div>
-<div class="balance-overlay" id="balanceDisplay">€<span id="balMain">21</span><span class="decimal">.<span id="balDec">60</span></span></div>
-
-<!-- Cover canvas: used to paint over original balance with sampled bg color -->
-<canvas id="cover" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:8;display:none;"></canvas>
+<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg" crossorigin="anonymous"/>
+<div class="balance-tap" id="balTap"></div>
+<canvas class="balance-cover" id="cover"></canvas>
+<div class="balance-text" id="balText">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -145,73 +137,58 @@ body {
 </div>
 
 <script>
-var currentBalance = 21.60;
+var currentBalance=21.60;
+var img=document.getElementById('bgImg');
 
-function openModal() {
-  document.getElementById('balanceInput').value = currentBalance.toFixed(2);
+document.getElementById('balTap').addEventListener('click',openModal);
+
+function openModal(){
+  document.getElementById('balanceInput').value=currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
-  setTimeout(function(){ document.getElementById('balanceInput').focus(); }, 100);
+  setTimeout(function(){document.getElementById('balanceInput').focus()},100);
 }
-function closeModal() {
+function closeModal(){
   document.getElementById('modal').classList.remove('show');
 }
-
-function sampleBgColor() {
-  // Draw the bg image onto a temp canvas and sample the color behind the balance
-  var img = document.getElementById('bgImg');
-  var tmp = document.createElement('canvas');
-  tmp.width = img.naturalWidth;
-  tmp.height = img.naturalHeight;
-  var ctx = tmp.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-  // Sample a pixel at the balance Y position, far left (pure gradient, no text)
-  var sampleY = Math.round(img.naturalHeight * 0.155);
-  var sampleX = 20;
-  var pixel = ctx.getImageData(sampleX, sampleY, 1, 1).data;
-  return 'rgb(' + pixel[0] + ',' + pixel[1] + ',' + pixel[2] + ')';
-}
-
-function coverOriginalBalance(bgColor) {
-  var cv = document.getElementById('cover');
-  var body = document.body;
-  var dpr = window.devicePixelRatio || 3;
-  cv.width = body.offsetWidth * dpr;
-  cv.height = body.offsetHeight * dpr;
-  cv.style.display = 'block';
-  var ctx = cv.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var w = body.offsetWidth, h = body.offsetHeight;
-  // Cover rectangle over the original balance text area
-  ctx.fillStyle = bgColor;
-  var rectY = h * 0.14;
-  var rectH = h * 0.052;
-  var rectX = w * 0.12;
-  var rectW = w * 0.76;
-  ctx.fillRect(rectX, rectY, rectW, rectH);
-}
-
-function saveBalance() {
-  var val = document.getElementById('balanceInput').value.replace(/[^0-9.]/g, '');
-  if (!val) { closeModal(); return; }
-  currentBalance = parseFloat(parseFloat(val).toFixed(2));
-  var parts = currentBalance.toFixed(2).split('.');
-  document.getElementById('balMain').textContent = parseInt(parts[0]).toLocaleString('en');
-  document.getElementById('balDec').textContent = parts[1];
-
-  // Sample bg color from the image and cover original balance
-  var bgColor = sampleBgColor();
-  coverOriginalBalance(bgColor);
-
-  // Show the overlay with new amount
-  document.getElementById('balanceDisplay').style.display = 'block';
+function saveBalance(){
+  var val=document.getElementById('balanceInput').value.replace(/[^0-9.]/g,'');
+  if(!val){closeModal();return}
+  currentBalance=parseFloat(parseFloat(val).toFixed(2));
+  var parts=currentBalance.toFixed(2).split('.');
+  document.getElementById('balMain').textContent=parseInt(parts[0]).toLocaleString('en');
+  document.getElementById('balDec').textContent=parts[1];
+  paintCover();
+  document.getElementById('cover').style.display='block';
+  document.getElementById('balText').style.display='block';
   closeModal();
 }
 
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+function paintCover(){
+  var cv=document.getElementById('cover');
+  var rect=cv.getBoundingClientRect();
+  var dpr=window.devicePixelRatio||3;
+  cv.width=rect.width*dpr;
+  cv.height=rect.height*dpr;
+  var ctx=cv.getContext('2d');
+  // Draw the same region of bg.png onto the cover canvas (without text)
+  // We sample a vertical stripe from the left edge (no text there) and tile it
+  var imgW=img.naturalWidth,imgH=img.naturalHeight;
+  var bodyRect=document.body.getBoundingClientRect();
+  // Map cover position to image coordinates
+  var scaleY=imgH/bodyRect.height;
+  var scaleX=imgW/bodyRect.width;
+  var srcY=Math.round((rect.top-bodyRect.top)*scaleY);
+  var srcH=Math.round(rect.height*scaleY);
+  // Draw full-width strip from the image's left edge (pure gradient, no text)
+  // We take a 1px-wide column and stretch it across
+  ctx.drawImage(img,0,srcY,1,srcH,0,0,cv.width,cv.height);
+}
+
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
 });
-document.getElementById('balanceInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') saveBalance();
+document.getElementById('balanceInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter')saveBalance();
 });
 </script>
 
