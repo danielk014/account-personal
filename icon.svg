@@ -1,10 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1B1B3A"/>
-      <stop offset="100%" stop-color="#2D2D5E"/>
+    <linearGradient id="rbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7f7f7"/>
+      <stop offset="100%" stop-color="#efefef"/>
+    </linearGradient>
+    <linearGradient id="rtext" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
-  <text x="256" y="340" text-anchor="middle" fill="#fff" font-size="300" font-weight="900" font-family="-apple-system, Helvetica, Arial, sans-serif">R</text>
+  <rect width="512" height="512" rx="112" fill="url(#rbg)"/>
+  <text x="256" y="365" text-anchor="middle" fill="url(#rtext)" 
+    font-size="380" font-weight="900" 
+    font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+    letter-spacing="-10">R</text>
 </svg>
