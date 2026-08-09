@@ -16,30 +16,17 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 
-/*
-  Container pinned to bottom of screen.
-  Image fills width, height is natural (auto).
-  If viewport is shorter than image, top overflows upward (hidden).
-  Tab bar at the bottom is always visible.
-  Overlays use % of container height = % of image height.
-*/
-.container{
+.bg{
   position:fixed;
-  bottom:0;
-  left:0;right:0;
-  max-width:393px;
-  margin:0 auto;
-}
-.container img{
-  width:100%;
-  height:auto;
+  top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center bottom;
   display:block;
 }
 
-/* Text overlays — positioned as % of image height (container height) */
 .label-text{
-  position:absolute;
-  top:23.4%;
+  position:fixed;
   left:0;width:100%;
   z-index:10;
   pointer-events:none;
@@ -51,8 +38,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
   letter-spacing:0.2px;
 }
 .balance-text{
-  position:absolute;
-  top:26.3%;
+  position:fixed;
   left:0;width:100%;
   z-index:10;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
@@ -74,8 +60,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
   letter-spacing:0;
 }
 .iban-text{
-  position:absolute;
-  top:31.8%;
+  position:fixed;
   left:0;width:100%;
   z-index:10;
   pointer-events:none;
@@ -136,14 +121,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 </head>
 <body>
 
-<div class="container">
-  <img src="bg.png" alt="" draggable="false"/>
-  <div class="label-text">Personal · EUR</div>
-  <div class="balance-text" id="balText" onclick="openModal()">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
-  <div class="iban-text">
-    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
-    <span>NL75 REVO 0942 7692 05</span>
-  </div>
+<img src="bg.png" class="bg" alt="" draggable="false"/>
+<div class="label-text" id="olLabel">Personal · EUR</div>
+<div class="balance-text" id="balText" onclick="openModal()">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+<div class="iban-text" id="olIban">
+  <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
+  <span>NL75 REVO 0942 7692 05</span>
 </div>
 
 <div class="modal-overlay" id="modal">
@@ -158,8 +141,28 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 </div>
 
 <script>
-var currentBalance=21.60;
+// Position overlays to match the image content, accounting for
+// object-fit:cover + object-position:bottom cropping from the top.
+// Image positions (as fraction of image height, measured with PIL):
+var IMG_W=1179, IMG_H=2556;
+var POS_LABEL=0.234, POS_BALANCE=0.263, POS_IBAN=0.318;
 
+function layout(){
+  var vw=window.innerWidth, vh=window.innerHeight;
+  // object-fit:cover scales to fill both dimensions
+  var scale=Math.max(vw/IMG_W, vh/IMG_H);
+  var rH=IMG_H*scale; // rendered image height
+  // object-position:bottom → image bottom = viewport bottom
+  var imgTop=vh-rH; // image top (negative if image is taller than viewport)
+
+  document.getElementById('olLabel').style.top=(imgTop+POS_LABEL*rH)+'px';
+  document.getElementById('balText').style.top=(imgTop+POS_BALANCE*rH)+'px';
+  document.getElementById('olIban').style.top=(imgTop+POS_IBAN*rH)+'px';
+}
+layout();
+window.addEventListener('resize',layout);
+
+var currentBalance=21.60;
 function openModal(){
   document.getElementById('balanceInput').value=currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
