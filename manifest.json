@@ -3,8 +3,8 @@
   "short_name": "Revolut",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#9c30ec",
-  "theme_color": "#9c30ec",
+  "background_color": "#191938",
+  "theme_color": "#191938",
   "icons": [
     {
       "src": "icon.svg",
