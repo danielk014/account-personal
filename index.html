@@ -14,59 +14,72 @@
 <title>Revolut</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden}
-body{max-width:393px;margin:0 auto;position:relative;height:100%}
-.bg{
-  position:absolute;
-  top:0;left:0;
+html,body{width:100%;height:100%;overflow:hidden;background:#2C84B6}
+body{max-width:393px;margin:0 auto}
+
+/* Container matches image dimensions exactly */
+.container{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+}
+.container img{
   width:100%;
   height:auto;
   display:block;
 }
+
+/* Invisible tap target over the balance in the image */
 .balance-tap{
   position:absolute;
-  top:15%;
+  top:25%;
   left:10%;
   width:80%;
-  height:5%;
+  height:6%;
   z-index:20;
   cursor:pointer;
 }
+
+/* Solid cover to hide original balance text — hidden until first edit */
 .balance-cover{
   display:none;
   position:absolute;
-  top:15%;
+  top:25.8%;
   left:0;
   width:100%;
-  height:5%;
+  height:4.9%;
   z-index:15;
-  background:linear-gradient(180deg,#8E3DF5 0%,#8843F3 100%);
+  background:linear-gradient(180deg,#784eeb 0%,#6f51ea 100%);
 }
+
+/* New balance text — hidden until first edit */
 .balance-text{
   display:none;
   position:absolute;
-  top:15.4%;
-  left:50%;
-  transform:translateX(-50%);
+  top:26.3%;
+  left:0;
+  width:100%;
   z-index:16;
   pointer-events:none;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
-  font-size:54px;
+  font-size:44px;
   font-weight:700;
   color:#fff;
-  letter-spacing:-1px;
+  letter-spacing:-0.5px;
   line-height:1;
   text-align:center;
   white-space:nowrap;
 }
 .balance-text .dec{
-  font-size:30px;
+  font-size:26px;
   font-weight:600;
   vertical-align:top;
   position:relative;
-  top:4px;
+  top:2px;
   letter-spacing:0;
 }
+
+/* Modal */
 .modal-overlay{
   display:none;
   position:fixed;
@@ -112,10 +125,12 @@ body{max-width:393px;margin:0 auto;position:relative;height:100%}
 </head>
 <body>
 
-<img src="bg.png" class="bg" alt="" draggable="false" id="bgImg"/>
-<div class="balance-tap" id="balTap"></div>
-<div class="balance-cover" id="cover"></div>
-<div class="balance-text" id="balText">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+<div class="container">
+  <img src="bg.png" alt="" draggable="false"/>
+  <div class="balance-tap" id="balTap"></div>
+  <div class="balance-cover" id="cover"></div>
+  <div class="balance-text" id="balText">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+</div>
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
