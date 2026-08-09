@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Revolut">
-<meta name="theme-color" content="#31317a">
+<meta name="theme-color" content="#AD1FF6">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
@@ -14,20 +14,37 @@
 <title>Revolut</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
+html{height:100%;overflow:hidden;background:#31317a}
+body{
+  max-width:393px;
+  margin:0 auto;
+  /* fill entire screen including safe areas */
+  height:100vh;height:100dvh;
+  overflow:hidden;
+  background:#31317a;
+}
 
-.bg{
+.container{
   position:fixed;
-  top:0;left:0;
+  top:0;left:0;right:0;bottom:0;
+  max-width:393px;
+  margin:0 auto;
+  overflow:hidden;
+}
+.container img{
   width:100%;
   height:100%;
   display:block;
+  object-fit:cover;
+  object-position:center top;
 }
 
+/* "Personal · EUR" label */
 .label-text{
-  position:fixed;
-  top:20.2%;
-  left:0;width:100%;
+  position:absolute;
+  top:23.4%;
+  left:0;
+  width:100%;
   z-index:10;
   pointer-events:none;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
@@ -37,10 +54,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
   text-align:center;
   letter-spacing:0.2px;
 }
+
+/* Balance amount */
 .balance-text{
-  position:fixed;
-  top:23.3%;
-  left:0;width:100%;
+  position:absolute;
+  top:26.3%;
+  left:0;
+  width:100%;
   z-index:10;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
   font-size:44px;
@@ -60,10 +80,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
   top:2px;
   letter-spacing:0;
 }
+
+/* IBAN row */
 .iban-text{
-  position:fixed;
-  top:28.9%;
-  left:0;width:100%;
+  position:absolute;
+  top:31.8%;
+  left:0;
+  width:100%;
   z-index:10;
   pointer-events:none;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
@@ -78,6 +101,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
   gap:8px;
 }
 
+/* Modal */
 .modal-overlay{
   display:none;
   position:fixed;
@@ -123,12 +147,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 </head>
 <body>
 
-<img src="bg.png" class="bg" alt="" draggable="false"/>
-<div class="label-text">Personal · EUR</div>
-<div class="balance-text" id="balText" onclick="openModal()">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
-<div class="iban-text">
-  <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
-  <span>NL75 REVO 0942 7692 05</span>
+<div class="container">
+  <img src="bg.png" alt="" draggable="false"/>
+  <div class="label-text">Personal · EUR</div>
+  <div class="balance-text" id="balText" onclick="openModal()">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+  <div class="iban-text">
+    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
+    <span>NL75 REVO 0942 7692 05</span>
+  </div>
 </div>
 
 <div class="modal-overlay" id="modal">
@@ -144,6 +170,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 
 <script>
 var currentBalance=21.60;
+
 function openModal(){
   document.getElementById('balanceInput').value=currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
