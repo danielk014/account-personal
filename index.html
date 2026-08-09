@@ -14,18 +14,19 @@
 <title>Revolut</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#2C84B6}
-body{max-width:393px;margin:0 auto}
+html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
+body{max-width:393px;margin:0 auto;height:100%}
 
-/* Container matches image dimensions exactly */
+/* Container fills viewport, image covers it */
 .container{
   position:relative;
   width:100%;
+  height:100%;
   overflow:hidden;
 }
 .container img{
   width:100%;
-  height:auto;
+  min-height:100%;
   display:block;
 }
 
