@@ -14,19 +14,29 @@
 <title>Revolut</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
-body{max-width:393px;margin:0 auto;height:100%}
+html{height:100%;overflow:hidden;background:#31317a}
+body{
+  max-width:393px;
+  margin:0 auto;
+  /* fill entire screen including safe areas */
+  height:100vh;height:100dvh;
+  overflow:hidden;
+  background:#31317a;
+}
 
 .container{
-  position:relative;
-  width:100%;
-  height:100%;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  max-width:393px;
+  margin:0 auto;
   overflow:hidden;
 }
 .container img{
   width:100%;
-  min-height:100%;
+  height:100%;
   display:block;
+  object-fit:cover;
+  object-position:center top;
 }
 
 /* "Personal · EUR" label */
