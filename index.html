@@ -17,7 +17,6 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#31317a}
 body{max-width:393px;margin:0 auto;height:100%}
 
-/* Container fills viewport, image covers it */
 .container{
   position:relative;
   width:100%;
@@ -30,38 +29,29 @@ body{max-width:393px;margin:0 auto;height:100%}
   display:block;
 }
 
-/* Invisible tap target over the balance in the image */
-.balance-tap{
+/* "Personal · EUR" label */
+.label-text{
   position:absolute;
-  top:25%;
-  left:10%;
-  width:80%;
-  height:6%;
-  z-index:20;
-  cursor:pointer;
-}
-
-/* Solid cover to hide original balance text — hidden until first edit */
-.balance-cover{
-  display:none;
-  position:absolute;
-  top:25.8%;
+  top:23.4%;
   left:0;
   width:100%;
-  height:4.9%;
-  z-index:15;
-  background:linear-gradient(180deg,#784eeb 0%,#6f51ea 100%);
+  z-index:10;
+  pointer-events:none;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-size:14px;
+  font-weight:400;
+  color:rgba(255,255,255,0.75);
+  text-align:center;
+  letter-spacing:0.2px;
 }
 
-/* New balance text — hidden until first edit */
+/* Balance amount */
 .balance-text{
-  display:none;
   position:absolute;
   top:26.3%;
   left:0;
   width:100%;
-  z-index:16;
-  pointer-events:none;
+  z-index:10;
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
   font-size:44px;
   font-weight:700;
@@ -70,6 +60,7 @@ body{max-width:393px;margin:0 auto;height:100%}
   line-height:1;
   text-align:center;
   white-space:nowrap;
+  cursor:pointer;
 }
 .balance-text .dec{
   font-size:26px;
@@ -78,6 +69,26 @@ body{max-width:393px;margin:0 auto;height:100%}
   position:relative;
   top:2px;
   letter-spacing:0;
+}
+
+/* IBAN row */
+.iban-text{
+  position:absolute;
+  top:31.8%;
+  left:0;
+  width:100%;
+  z-index:10;
+  pointer-events:none;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-size:14px;
+  font-weight:400;
+  color:rgba(255,255,255,0.8);
+  text-align:center;
+  letter-spacing:0.3px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
 }
 
 /* Modal */
@@ -128,9 +139,12 @@ body{max-width:393px;margin:0 auto;height:100%}
 
 <div class="container">
   <img src="bg.png" alt="" draggable="false"/>
-  <div class="balance-tap" id="balTap"></div>
-  <div class="balance-cover" id="cover"></div>
-  <div class="balance-text" id="balText">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+  <div class="label-text">Personal · EUR</div>
+  <div class="balance-text" id="balText" onclick="openModal()">€<span id="balMain">21</span><span class="dec">.<span id="balDec">60</span></span></div>
+  <div class="iban-text">
+    <svg width="16" height="16" fill="rgba(255,255,255,0.75)" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h2v-6H3v6zm4 0h2v-6H7v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zm4 0h2v-6h-2v6zM2 9l10-5 10 5v2H2V9z"/></svg>
+    <span>NL75 REVO 0942 7692 05</span>
+  </div>
 </div>
 
 <div class="modal-overlay" id="modal">
@@ -147,8 +161,6 @@ body{max-width:393px;margin:0 auto;height:100%}
 <script>
 var currentBalance=21.60;
 
-document.getElementById('balTap').addEventListener('click',openModal);
-
 function openModal(){
   document.getElementById('balanceInput').value=currentBalance.toFixed(2);
   document.getElementById('modal').classList.add('show');
@@ -164,8 +176,6 @@ function saveBalance(){
   var parts=currentBalance.toFixed(2).split('.');
   document.getElementById('balMain').textContent=parseInt(parts[0]).toLocaleString('en');
   document.getElementById('balDec').textContent=parts[1];
-  document.getElementById('cover').style.display='block';
-  document.getElementById('balText').style.display='block';
   closeModal();
 }
 document.getElementById('modal').addEventListener('click',function(e){
